@@ -1,6 +1,8 @@
 package uet.oop.bomberman.input;
 
 import javafx.scene.Scene;
+import javafx.scene.canvas.GraphicsContext;
+import uet.oop.bomberman.entities.Bomb;
 import uet.oop.bomberman.entities.Bomber;
 import uet.oop.bomberman.entities.Entity;
 
@@ -9,4 +11,6 @@ import java.util.List;
 public abstract class load {
     Scene scene;
     Bomber bomber;
+    public static List <Entity> entities;
+    GraphicsContext gc;
 }

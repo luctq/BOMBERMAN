@@ -65,20 +65,25 @@ public class BombermanGame extends Application {
         timer.start();
         Level1 level1 = new Level1();
         level1.creatMap(stillObjects);
-        //createMap();
         Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomberman);
         handingEvent event = new handingEvent(entities, scene, (Bomber) bomberman);
-        event.handing(entities);
+        event.handing();
     }
 
     public void update() {
-        entities.forEach(Entity::update);
+        for (int i = 0; i < entities.size(); i++) {
+            entities.get(i).update();
+        }
     }
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        stillObjects.forEach(g -> g.render(gc));
-        entities.forEach(g -> g.render(gc));
+        for(Entity e : stillObjects) {
+            e.render(gc);
+        }
+        for(Entity e : entities) {
+            e.render(gc);
+        }
     }
 }

@@ -15,6 +15,8 @@ import uet.oop.bomberman.HandingCollision.canMove;
 import uet.oop.bomberman.entities.Map.Level1;
 import uet.oop.bomberman.graphics.Sprite;
 
+import java.util.List;
+
 public class Bomber extends AnimatedEntitiy {
         boolean up, down, right, left;
         Sprite _sprite;

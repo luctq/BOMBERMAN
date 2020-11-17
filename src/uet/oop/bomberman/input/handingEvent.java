@@ -1,5 +1,6 @@
 package uet.oop.bomberman.input;
 
+import com.sun.deploy.config.JREInfo;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -10,16 +11,23 @@ import uet.oop.bomberman.entities.Bomber;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class handingEvent extends load {
     public static boolean goUp, goDown, goLeft, goRight;
+    public static int index;
 
     public handingEvent(List<Entity> entities, Scene scene, Bomber bomber) {
         this.scene = scene;
         this.bomber = bomber;
+        this.entities = entities;
     }
-    public void handing(List<Entity> entities) {
+    public static void clearBomb() {
+        entities.remove(index);
+    }
+    public void handing() {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -50,10 +58,13 @@ public class handingEvent extends load {
                         break;
                     }
                     case SPACE: {
-                        Entity bomb = new Bomb(bomber.getX()/Sprite.SCALED_SIZE, bomber.getY()/Sprite.SCALED_SIZE, Sprite.bomb.getFxImage());
-                        entities.add(bomb);
-                        ((Bomb) bomb).timeToExplode = 120;
-                        break;
+                        if (Bomb.removed) {
+                            Bomb.removed = false;
+                            Entity bomb = new Bomb(bomber.getX() / Sprite.SCALED_SIZE, bomber.getY() / Sprite.SCALED_SIZE, Sprite.bomb.getFxImage());
+                            entities.add(bomb);
+                            index = entities.size() - 1;
+                            break;
+                        }
                     }
                 }
             }
