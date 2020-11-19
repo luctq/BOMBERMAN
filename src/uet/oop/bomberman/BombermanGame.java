@@ -32,7 +32,7 @@ public class BombermanGame extends Application {
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
-
+    private List<Explosion> explosions = new ArrayList<>();
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
@@ -69,11 +69,15 @@ public class BombermanGame extends Application {
         entities.add(bomberman);
         handingEvent event = new handingEvent(entities, scene, (Bomber) bomberman);
         event.handing();
+        DirectionalExplosion de = new DirectionalExplosion(entities, stillObjects, explosions);
     }
 
     public void update() {
         for (int i = 0; i < entities.size(); i++) {
             entities.get(i).update();
+        }
+        for (int i = 0; i < explosions.size(); i++) {
+            explosions.get(i).update();
         }
     }
 
@@ -83,6 +87,9 @@ public class BombermanGame extends Application {
             e.render(gc);
         }
         for(Entity e : entities) {
+            e.render(gc);
+        }
+        for(Explosion e : explosions) {
             e.render(gc);
         }
     }

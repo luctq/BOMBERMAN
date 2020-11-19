@@ -66,10 +66,4 @@ public class Bomber extends AnimatedEntitiy {
         public void backRight() {
             this.img = Sprite.player_right.getFxImage();
         }
-        public int getX() {
-            return x;
-        }
-        public int getY() {
-            return y;
-        }
 }

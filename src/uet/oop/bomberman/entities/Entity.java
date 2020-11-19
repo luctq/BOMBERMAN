@@ -28,4 +28,10 @@ public abstract class Entity {
         gc.drawImage(img, x, y);
     }
     public abstract void update();
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
+    }
 }

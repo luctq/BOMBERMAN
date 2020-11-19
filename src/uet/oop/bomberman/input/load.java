@@ -12,5 +12,4 @@ public abstract class load {
     Scene scene;
     Bomber bomber;
     public static List <Entity> entities;
-    GraphicsContext gc;
 }

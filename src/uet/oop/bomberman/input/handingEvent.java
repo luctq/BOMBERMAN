@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
+import uet.oop.bomberman.HandingCollision.canMove;
 import uet.oop.bomberman.entities.Bomb;
 import uet.oop.bomberman.entities.Bomber;
 import uet.oop.bomberman.entities.Entity;
@@ -18,6 +19,7 @@ import java.util.List;
 public class handingEvent extends load {
     public static boolean goUp, goDown, goLeft, goRight;
     public static int index;
+    
 
     public handingEvent(List<Entity> entities, Scene scene, Bomber bomber) {
         this.scene = scene;
@@ -60,7 +62,9 @@ public class handingEvent extends load {
                     case SPACE: {
                         if (Bomb.removed) {
                             Bomb.removed = false;
-                            Entity bomb = new Bomb(bomber.getX() / Sprite.SCALED_SIZE, bomber.getY() / Sprite.SCALED_SIZE, Sprite.bomb.getFxImage());
+                            int posXBomb = (bomber.getX() + 16) / Sprite.SCALED_SIZE;
+                            int posYBomb = (bomber.getY() + 16) / Sprite.SCALED_SIZE;
+                            Entity bomb = new Bomb(posXBomb, posYBomb, Sprite.bomb.getFxImage());
                             entities.add(bomb);
                             index = entities.size() - 1;
                             break;
