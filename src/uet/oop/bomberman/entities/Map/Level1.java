@@ -35,22 +35,18 @@ public class Level1 extends loadMap{
     @Override
     public void creatMap(List<Entity> stillObjects) throws FileNotFoundException {
         this.map = loadFile(this.path);
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
+        for (int j = 0; j < height; j++) {
+            for (int i = 0; i < width; i++) {
                 Entity object;
                 switch (map[j].charAt(i)) {
                     case '#': {
                         object = new Wall(i, j, Sprite.wall.getFxImage());
                         break;
                     }
-                    case '*': {
+                    case '*': case 'f': case 's': case 'b': case 'x': {
                         object = new Brick(i, j, Sprite.brick.getFxImage());
                         break;
                     }
-//                   case 'x': {
-//                       object = new Portal(i, j, Sprite.portal.getFxImage());
-//                       break;
-//                   }
                     default: {
                         object = new Grass(i, j, Sprite.grass.getFxImage());
                         break;

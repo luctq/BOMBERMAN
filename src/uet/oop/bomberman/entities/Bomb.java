@@ -6,6 +6,7 @@ import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.handingEvent;
 
 public class Bomb extends AnimatedEntitiy {
+    public static int numberOfBomb = 1;
     public int timeToExplode;
     public int timeAfter;
     Sprite _sprite;
@@ -13,7 +14,7 @@ public class Bomb extends AnimatedEntitiy {
     public Bomb(int x, int y, Image img) {
         super(x, y, img);
         timeToExplode = 120;
-        timeAfter = 10;
+        timeAfter = 20;
     }
     @Override
     public void update() {
@@ -25,9 +26,10 @@ public class Bomb extends AnimatedEntitiy {
             DirectionalExplosion.explosion(x, y);
             explode();
         } else {
+            numberOfBomb++;
+            handingEvent.BombAlive--;
             canMove.posXBomb = -1;
             canMove.posYBomb = -1;
-            removed = true;
             handingEvent.clearBomb();
             DirectionalExplosion.explosions.clear();
         }

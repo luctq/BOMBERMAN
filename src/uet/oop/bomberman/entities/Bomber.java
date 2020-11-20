@@ -18,6 +18,7 @@ import uet.oop.bomberman.graphics.Sprite;
 import java.util.List;
 
 public class Bomber extends AnimatedEntitiy {
+        public static int speed = 2;
         boolean up, down, right, left;
         Sprite _sprite;
         public Bomber(int x, int y, Image img) {
@@ -31,28 +32,28 @@ public class Bomber extends AnimatedEntitiy {
             _sprite = Sprite.player_down;
             _sprite = Sprite.movingSprite(Sprite.player_down_1, Sprite.player_down_2, _animate, 20);
             this.img = _sprite.getFxImage();
-            if (canMove.canMoveDown(this.x, this.y+2)) this.y = this.y + 2;
+            if (canMove.canMoveDown(this.x, this.y+2)) this.y = this.y + speed;
         }
 
         public void moveUp() {
             _sprite = Sprite.player_up;
             _sprite = Sprite.movingSprite(Sprite.player_up_1, Sprite.player_up_2, _animate, 20);
             this.img = _sprite.getFxImage();
-            if (canMove.canMoveUp(this.x, this.y-2)) this.y = this.y - 2;
+            if (canMove.canMoveUp(this.x, this.y-2)) this.y = this.y - speed;
         }
 
         public void moveLeft() {
             _sprite = Sprite.player_left;
             _sprite = Sprite.movingSprite(Sprite.player_left_1, Sprite.player_left_2, _animate, 20);
             this.img = _sprite.getFxImage();
-            if (canMove.canMoveLeft(this.x - 2, this.y)) this.x = this.x - 2;
+            if (canMove.canMoveLeft(this.x - 2, this.y)) this.x = this.x - speed;
         }
 
         public void moveRight() {
             _sprite = Sprite.player_right;
             _sprite = Sprite.movingSprite(Sprite.player_right_1, Sprite.player_right_2, _animate, 20);
             this.img = _sprite.getFxImage();
-            if (canMove.canMoveRight(this.x+2, this.y)) this.x = this.x + 2;
+            if (canMove.canMoveRight(this.x+2, this.y)) this.x = this.x + speed;
         }
         public void backUp() {
             this.img = Sprite.player_up.getFxImage();

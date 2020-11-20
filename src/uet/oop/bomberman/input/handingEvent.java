@@ -19,6 +19,7 @@ import java.util.List;
 public class handingEvent extends load {
     public static boolean goUp, goDown, goLeft, goRight;
     public static int index;
+    public static int BombAlive = 0;
     
 
     public handingEvent(List<Entity> entities, Scene scene, Bomber bomber) {
@@ -60,15 +61,16 @@ public class handingEvent extends load {
                         break;
                     }
                     case SPACE: {
-                        if (Bomb.removed) {
-                            Bomb.removed = false;
-                            int posXBomb = (bomber.getX() + 16) / Sprite.SCALED_SIZE;
-                            int posYBomb = (bomber.getY() + 16) / Sprite.SCALED_SIZE;
-                            Entity bomb = new Bomb(posXBomb, posYBomb, Sprite.bomb.getFxImage());
-                            entities.add(bomb);
-                            index = entities.size() - 1;
-                            break;
-                        }
+                            if (Bomb.numberOfBomb > 0) {
+                                int posXBomb = (bomber.getX() + 16) / Sprite.SCALED_SIZE;
+                                int posYBomb = (bomber.getY() + 16) / Sprite.SCALED_SIZE;
+                                Entity bomb = new Bomb(posXBomb, posYBomb, Sprite.bomb.getFxImage());
+                                BombAlive++;
+                                entities.add(bomb);
+                                index = entities.size() - BombAlive;
+                                Bomb.numberOfBomb--;
+                                break;
+                            }
                     }
                 }
             }
