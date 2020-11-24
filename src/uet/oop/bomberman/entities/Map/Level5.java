@@ -1,9 +1,6 @@
 package uet.oop.bomberman.entities.Map;
 
-import uet.oop.bomberman.entities.Brick;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Grass;
-import uet.oop.bomberman.entities.Wall;
+import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.File;
@@ -33,24 +30,30 @@ public class Level5 extends loadMap{
     }
 
     @Override
-    public void creatMap(List<Entity> stillObjects) throws FileNotFoundException {
+    public void creatMap(List<Entity> stillObjects, List<Entity> background, List<Entity> entities) throws FileNotFoundException {
         this.map = loadFile(this.path);
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
+        for (int j = 0; j < height; j++) {
+            for (int i = 0; i < width; i++) {
+                Entity grass = new Grass(i, j, Sprite.grass.getFxImage());
+                background.add(grass);
                 Entity object;
                 switch (map[j].charAt(i)) {
                     case '#': {
                         object = new Wall(i, j, Sprite.wall.getFxImage());
                         break;
                     }
-                    case '*': {
+                    case '*': case 'f': case 's': case 'b': case 'x': {
                         object = new Brick(i, j, Sprite.brick.getFxImage());
                         break;
                     }
-//                   case 'x': {
-//                       object = new Portal(i, j, Sprite.portal.getFxImage());
-//                       break;
-//                   }
+                    case '1': {
+                        Entity balloon = new Balloon(i, j, Sprite.balloom_right1.getFxImage());
+                        entities.add(balloon);
+                    }
+                    case '2': {
+                        Entity oneal = new Oneal(i, j, Sprite.oneal_right1.getFxImage());
+                        entities.add(oneal);
+                    }
                     default: {
                         object = new Grass(i, j, Sprite.grass.getFxImage());
                         break;

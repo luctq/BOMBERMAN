@@ -10,6 +10,6 @@ import java.util.List;
 
 public abstract class load {
     Scene scene;
-    Bomber bomber;
+    public static Bomber bomber;
     public static List <Entity> entities;
 }

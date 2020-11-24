@@ -6,6 +6,7 @@ import uet.oop.bomberman.entities.item.BombItem;
 import uet.oop.bomberman.entities.item.FlameItem;
 import uet.oop.bomberman.entities.item.SpeedItem;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.input.handingEvent;
 
 import java.util.List;
 
@@ -13,69 +14,71 @@ public class canExplosion {
     static List<Entity> stillObjects = DirectionalExplosion.stillObjects;
     public static String[] map = Level1.map;
     public static boolean explosionLeft(int posX, int posY) {
-        int temp1 = posX / Sprite.SCALED_SIZE;
-        int temp2 = posY / Sprite.SCALED_SIZE;
-        if (test(temp1, temp2)) return true;
-        return false;
+            int temp1 = posX / Sprite.SCALED_SIZE;
+            int temp2 = posY / Sprite.SCALED_SIZE;
+            if (map[temp2].charAt(temp1) != '#') return true;
+            return false;
     }
     public static boolean explosionUp(int posX, int posY) {
         int temp1 = posX / Sprite.SCALED_SIZE;
         int temp2 = posY / Sprite.SCALED_SIZE;
-        if (test(temp1, temp2)) return true;
+        if (map[temp2].charAt(temp1) != '#') return true;
         return false;
     }
     public static boolean explosionRight(int posX, int posY) {
         int temp1 = posX / Sprite.SCALED_SIZE;
         int temp2 = posY / Sprite.SCALED_SIZE;
-        if (test(temp1, temp2)) return true;
+        if (map[temp2].charAt(temp1) != '#') return true;
         return false;
     }
     public static boolean explosionDown(int posX, int posY) {
         int temp1 = posX / Sprite.SCALED_SIZE;
         int temp2 = posY / Sprite.SCALED_SIZE;
-        if (test(temp1, temp2)) return true;
+        if (map[temp2].charAt(temp1) != '#') return true;
         return false;
     }
-    public static boolean test(int temp1, int temp2) {
-        switch (map[temp2].charAt(temp1)) {
-            case '#': {
-                return false;
-            }
-            case '*': {
-                map[temp2] = map[temp2].substring(0, temp1) + ' ' + map[temp2].substring(temp1 + 1);
-                Brick brick = (Brick) stillObjects.get(temp1 + 31 * temp2);
-                brick.change();
-                Entity grass = new Grass(temp1, temp2, Sprite.grass.getFxImage());
-                stillObjects.set(temp1 + 31 * temp2, grass);
-                return false;
-            }
-            case 'f': {
-                map[temp2] = map[temp2].substring(0, temp1) + 'F' + map[temp2].substring(temp1 + 1);
-                Entity flameItem = new FlameItem(temp1, temp2, Sprite.powerup_flames.getFxImage());
-                stillObjects.set(temp1 + 31 * temp2, flameItem);
-                return true;
-            }
-            case 'b': {
-                map[temp2] = map[temp2].substring(0, temp1) + 'B' + map[temp2].substring(temp1 + 1);
-                Entity bombItem = new BombItem(temp1, temp2, Sprite.powerup_bombs.getFxImage());
-                stillObjects.set(temp1 + 31 * temp2, bombItem);
-                return true;
-            }
-            case 's': {
-                map[temp2] = map[temp2].substring(0, temp1) + 'S' + map[temp2].substring(temp1 + 1);
-                Entity speedItem = new SpeedItem(temp1, temp2, Sprite.powerup_speed.getFxImage());
-                stillObjects.set(temp1 + 31 * temp2, speedItem);
-                return true;
-            }
-            case 'x': {
-                map[temp2] = map[temp2].substring(0, temp1) + 'x' + map[temp2].substring(temp1 + 1);
-                Entity portal = new Portal(temp1, temp2, Sprite.portal.getFxImage());
-                stillObjects.set(temp1 + 31 * temp2, portal);
-                return true;
-            }
-            default: {
-                return true;
-            }
+
+    public static void destroy(int posX, int posY) {
+            int temp1 = posX / Sprite.SCALED_SIZE;
+            int temp2 = posY / Sprite.SCALED_SIZE;
+            switch (map[temp2].charAt(temp1)) {
+                case '*': {
+                    map[temp2] = map[temp2].substring(0, temp1) + ' ' + map[temp2].substring(temp1+1);
+//                Brick brick = (Brick) stillObjects.get(temp1 + 31 * temp2);
+//                if(Bomb.timeAfter > 0) {
+//                    brick.change();
+//                    stillObjects.set(temp1 + 31 * temp2, (Entity) brick);
+//                }
+                    Entity grass = new Grass(temp1, temp2, Sprite.grass.getFxImage());
+                    stillObjects.set(temp1 + 31 * temp2, grass);
+                    break;
+                }
+                case 'f': {
+                    System.out.println(map[temp2]);
+                    map[temp2] = map[temp2].substring(0, temp1) + 'F' + map[temp2].substring(temp1 + 1);
+                    System.out.println(map[temp2]);
+                    Entity flameItem = new FlameItem(temp1, temp2, Sprite.powerup_flames.getFxImage());
+                    stillObjects.set(temp1 + 31 * temp2, flameItem);
+                    break;
+                }
+                case 'b': {
+                    map[temp2] = map[temp2].substring(0, temp1) + 'B' + map[temp2].substring(temp1 + 1);
+                    Entity bombItem = new BombItem(temp1, temp2, Sprite.powerup_bombs.getFxImage());
+                    stillObjects.set(temp1 + 31 * temp2, bombItem);
+                    break;
+                }
+                case 's': {
+                    map[temp2] = map[temp2].substring(0, temp1) + 'S' + map[temp2].substring(temp1 + 1);
+                    Entity speedItem = new SpeedItem(temp1, temp2, Sprite.powerup_speed.getFxImage());
+                    stillObjects.set(temp1 + 31 * temp2, speedItem);
+                    break;
+                }
+                case 'x': {
+                    map[temp2] = map[temp2].substring(0, temp1) + 'x' + map[temp2].substring(temp1 + 1);
+                    Entity portal = new Portal(temp1, temp2, Sprite.portal.getFxImage());
+                    stillObjects.set(temp1 + 31 * temp2, portal);
+                    break;
+                }
         }
 //        if (map[temp2].charAt(temp1) == '#') {
 //            return false;

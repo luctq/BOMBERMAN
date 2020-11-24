@@ -1,9 +1,6 @@
 package uet.oop.bomberman.entities.Map;
 
-import uet.oop.bomberman.entities.Brick;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Grass;
-import uet.oop.bomberman.entities.Wall;
+import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.File;
@@ -13,7 +10,7 @@ import java.util.Scanner;
 
 public class Level1 extends loadMap{
     private static int width;
-    String path = generalPath + "Level1.txt";
+    String path = generalPath + "Level2.txt";
     private static int height;
     private int level;
     public static String[] map;
@@ -33,26 +30,41 @@ public class Level1 extends loadMap{
     }
 
     @Override
-    public void creatMap(List<Entity> stillObjects) throws FileNotFoundException {
+    public void creatMap(List<Entity> stillObjects, List<Entity> background, List<Entity> entities) throws FileNotFoundException {
         this.map = loadFile(this.path);
         for (int j = 0; j < height; j++) {
             for (int i = 0; i < width; i++) {
-                Entity object;
                 switch (map[j].charAt(i)) {
                     case '#': {
-                        object = new Wall(i, j, Sprite.wall.getFxImage());
+                        Entity object = new Wall(i, j, Sprite.wall.getFxImage());
+                        stillObjects.add(object);
                         break;
                     }
                     case '*': case 'f': case 's': case 'b': case 'x': {
-                        object = new Brick(i, j, Sprite.brick.getFxImage());
+                        Entity object = new Brick(i, j, Sprite.brick.getFxImage());
+                        stillObjects.add(object);
+                        break;
+                    }
+                    case '1': {
+                        Entity object = new Grass(i, j, Sprite.grass.getFxImage());
+                        stillObjects.add(object);
+                        Entity balloon = new Balloon(i, j, Sprite.balloom_right1.getFxImage());
+                        entities.add(balloon);
+                        break;
+                    }
+                    case '2': {
+                        Entity object = new Grass(i, j, Sprite.grass.getFxImage());
+                        stillObjects.add(object);
+                        Entity oneal = new Oneal(i, j, Sprite.oneal_right1.getFxImage());
+                        entities.add(oneal);
                         break;
                     }
                     default: {
-                        object = new Grass(i, j, Sprite.grass.getFxImage());
+                        Entity object = new Grass(i, j, Sprite.grass.getFxImage());
+                        stillObjects.add(object);
                         break;
                     }
                 }
-                stillObjects.add(object);
             }
         }
     }

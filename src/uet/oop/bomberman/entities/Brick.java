@@ -16,6 +16,6 @@ public class Brick  extends AnimatedEntitiy {
     }
 
     public void change() {
-        this.img = Sprite.movingSprite(Sprite.brick_exploded, Sprite.brick_exploded1, Sprite.brick_exploded2, _animate, 10).getFxImage();
+        this.img = Sprite.movingSprite(Sprite.brick_exploded, Sprite.brick_exploded1, Sprite.brick_exploded2, _animate, 2).getFxImage();
     }
 }

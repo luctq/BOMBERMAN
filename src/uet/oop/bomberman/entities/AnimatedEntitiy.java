@@ -6,7 +6,7 @@ import uet.oop.bomberman.entities.Entity;
 public abstract class AnimatedEntitiy extends Entity {
 
     protected int _animate = 0;
-    protected final int MAX_ANIMATE = 7500; //save the animation status and dont let this get too big
+    protected final int MAX_ANIMATE = 5000; //save the animation status and dont let this get too big
 
     public AnimatedEntitiy(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);

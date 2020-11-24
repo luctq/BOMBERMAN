@@ -33,6 +33,7 @@ public class BombermanGame extends Application {
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
     private List<Explosion> explosions = new ArrayList<>();
+    private List<Entity> background = new ArrayList<>();
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
@@ -64,12 +65,18 @@ public class BombermanGame extends Application {
         };
         timer.start();
         Level1 level1 = new Level1();
-        level1.creatMap(stillObjects);
+        level1.creatMap(stillObjects, background, entities);
         Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomberman);
         handingEvent event = new handingEvent(entities, scene, (Bomber) bomberman);
         event.handing();
         DirectionalExplosion de = new DirectionalExplosion(entities, stillObjects, explosions);
+        for (int i = 0; i < entities.size(); i++) {
+            if (entities.get(i) instanceof Balloon) {
+                Balloon balloon = (Balloon) entities.get(i);
+                balloon.move();
+            }
+        }
     }
 
     public void update() {
@@ -79,10 +86,17 @@ public class BombermanGame extends Application {
         for (int i = 0; i < explosions.size(); i++) {
             explosions.get(i).update();
         }
+        for (int i = 0; i < stillObjects.size(); i++) {
+            stillObjects.get(i).update();
+        }
     }
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        for(Entity e : background) {
+            e.render(gc);
+        }
+
         for(Entity e : stillObjects) {
             e.render(gc);
         }
