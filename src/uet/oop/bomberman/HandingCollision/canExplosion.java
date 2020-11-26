@@ -43,19 +43,14 @@ public class canExplosion {
             int temp2 = posY / Sprite.SCALED_SIZE;
             switch (map[temp2].charAt(temp1)) {
                 case '*': {
+                    Brick brick = (Brick) stillObjects.get(temp1 + 31 * temp2);
                     map[temp2] = map[temp2].substring(0, temp1) + ' ' + map[temp2].substring(temp1+1);
-//                Brick brick = (Brick) stillObjects.get(temp1 + 31 * temp2);
-//                if(Bomb.timeAfter > 0) {
-//                    brick.change();
-//                    stillObjects.set(temp1 + 31 * temp2, (Entity) brick);
-//                }
-                    Entity grass = new Grass(temp1, temp2, Sprite.grass.getFxImage());
-                    stillObjects.set(temp1 + 31 * temp2, grass);
-                    return;
+                    brick.dead();
+                    //stillObjects.set(temp1 + 31 * temp2, new Brick(temp1, temp2, Sprite.grass.getFxImage()));
+                   return;
                 }
                 case 'f': {
                     map[temp2] = map[temp2].substring(0, temp1) + 'F' + map[temp2].substring(temp1 + 1);
-                    System.out.println(map[temp2]);
                     Entity flameItem = new FlameItem(temp1, temp2, Sprite.powerup_flames.getFxImage());
                     stillObjects.set(temp1 + 31 * temp2, flameItem);
                     return;

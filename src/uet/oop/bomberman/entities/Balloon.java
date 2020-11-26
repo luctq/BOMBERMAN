@@ -17,6 +17,7 @@ public class Balloon extends AnimatedEntitiy {
     int m = 90;
     Random rd = new Random();
     int pos;
+    int timeDead = 30;
     String[] map = Level1.map;
     boolean removed = false;
     Sprite _sprite;
@@ -28,6 +29,14 @@ public class Balloon extends AnimatedEntitiy {
     @Override
     public void update() {
         animate();
+        if (alive == false) {
+            if (timeDead > 0) timeDead--;
+            if (timeDead == 0) {
+                handingEvent.entities.remove(this);
+                timeDead = 30;
+            }
+        }
+
     }
     public void moveDown() {
         kill();
@@ -72,15 +81,16 @@ public class Balloon extends AnimatedEntitiy {
 
     public void kill() {
         if (handingEvent.bomber.alive) {
-            int Ox = (handingEvent.bomber.getX() + Sprite.SCALED_SIZE/2) - (x + Sprite.SCALED_SIZE/2);
+            int Ox = (handingEvent.bomber.getX() + 20/2) - (x + Sprite.SCALED_SIZE/2);
             int Oy = (handingEvent.bomber.getY() + Sprite.SCALED_SIZE/2) - (y + Sprite.SCALED_SIZE/2);
             if (Ox < 0) Ox = -Ox;
             if (Oy < 0) Oy = -Oy;
-            if (Ox <= Sprite.SCALED_SIZE && Oy <= Sprite.SCALED_SIZE) handingEvent.bomber.dead();
+            if (Ox <= (Sprite.SCALED_SIZE + 20) / 2 && Oy <= Sprite.SCALED_SIZE) handingEvent.bomber.dead();
         }
     }
 
     public boolean withExplosion( int BombX, int BombY) {
+        BombX = BombX - Sprite.SCALED_SIZE;
         int Ox = (x + Sprite.SCALED_SIZE/2) - (BombX + Sprite.SCALED_SIZE/2);
         int Oy = (y + Sprite.SCALED_SIZE/2) - (BombY + Sprite.SCALED_SIZE/2);
         if (Ox < 0) Ox = -Ox;

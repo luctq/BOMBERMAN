@@ -94,14 +94,16 @@ public class BombermanGame extends Application {
         for (int i = 0; i < bombs.size(); i++) {
             bombs.get(i).update();
         }
+        for (int i = 0; i < background.size(); i++) {
+            background.get(i).update();
+        }
     }
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for(Entity e : background) {
-            e.render(gc);
+        e.render(gc);
         }
-
         for(Entity e : stillObjects) {
             e.render(gc);
         }

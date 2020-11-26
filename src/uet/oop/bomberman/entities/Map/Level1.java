@@ -41,6 +41,8 @@ public class Level1 extends loadMap{
                         break;
                     }
                     case '*': case 'f': case 's': case 'b': case 'x': {
+                        Entity object1 = new Grass(i, j, Sprite.grass.getFxImage());
+                        background.add(object1);
                         Entity object = new Brick(i, j, Sprite.brick.getFxImage());
                         stillObjects.add(object);
                         break;
@@ -54,7 +56,7 @@ public class Level1 extends loadMap{
                     }
                     case '2': {
                         Entity object = new Grass(i, j, Sprite.grass.getFxImage());
-                        stillObjects.add(object);
+                        background.add(object);
                         Entity oneal = new Oneal(i, j, Sprite.oneal_right1.getFxImage());
                         entities.add(oneal);
                         break;

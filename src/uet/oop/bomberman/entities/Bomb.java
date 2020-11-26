@@ -34,7 +34,6 @@ public class Bomb extends AnimatedEntitiy {
                     Balloon balloon = (Balloon) handingEvent.entities.get(i);
                     if (balloon.withExplosion(x, y)) {
                         balloon.dead();
-                        handingEvent.entities.remove(balloon);
                     }
                 }
             }
