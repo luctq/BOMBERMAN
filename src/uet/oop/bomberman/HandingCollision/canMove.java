@@ -26,12 +26,7 @@ public class canMove {
         }
         temp2 = posY + 29;
         temp2 = temp2 / Sprite.SCALED_SIZE;
-        if (map[temp2].charAt(temp1) == '#'|| map[temp2].charAt(temp1) == '*') return false;
-        if (map[temp2].charAt(temp1) == 'f'|| map[temp2].charAt(temp1) == 'b'
-                || map[temp2].charAt(temp1) == 's' || map[temp2].charAt(temp1) == 'x') {
-            return false;
-        }
-        return true;
+        return chooseItem(temp1, temp2);
     }
     public static boolean canMoveRight(int posX, int posY) {
         int temp1 = posX + 22;
@@ -47,12 +42,7 @@ public class canMove {
         }
         temp2 = posY + 29;
         temp2 = temp2 / Sprite.SCALED_SIZE;
-        if (map[temp2].charAt(temp1) == '#'|| map[temp2].charAt(temp1) == '*') return false;
-        if (map[temp2].charAt(temp1) == 'f'|| map[temp2].charAt(temp1) == 'b'
-                || map[temp2].charAt(temp1) == 's' || map[temp2].charAt(temp1) == 'x') {
-            return false;
-        }
-        return true;
+        return chooseItem(temp1, temp2);
     }
     public static boolean canMoveUp(int posX, int posY) {
         int temp1 = posX;
@@ -67,13 +57,7 @@ public class canMove {
         }
         temp1 = posX + 22;
         temp1 = temp1 / Sprite.SCALED_SIZE;
-        if (map[temp2].charAt(temp1) == '#' || map[temp2].charAt(temp1) == '*') return false;
-        if (map[temp2].charAt(temp1) == 'f'|| map[temp2].charAt(temp1) == 'b'
-                || map[temp2].charAt(temp1) == 's' || map[temp2].charAt(temp1) == 'x') {
-            return false;
-        }
-
-        return true;
+        return chooseItem(temp1, temp2);
     }
     public static boolean canMoveDown(int posX, int posY) {
         int temp1 = posX;
@@ -106,6 +90,9 @@ public class canMove {
         }
         temp1 = posX + 20;
         temp1 = temp1 / Sprite.SCALED_SIZE;
+        return chooseItem(temp1, temp2);
+    }
+    public static boolean chooseItem(int temp1, int temp2) {
         switch (map[temp2].charAt(temp1)) {
             case '#': case '*': case 'f': case 's': case 'b': case 'x':{
                 return false;

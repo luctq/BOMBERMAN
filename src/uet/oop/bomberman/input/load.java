@@ -12,4 +12,5 @@ public abstract class load {
     Scene scene;
     public static Bomber bomber;
     public static List <Entity> entities;
+    public static List <Bomb> bombs;
 }

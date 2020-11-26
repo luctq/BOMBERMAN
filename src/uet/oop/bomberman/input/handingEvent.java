@@ -5,6 +5,7 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import uet.oop.bomberman.HandingCollision.canMove;
 import uet.oop.bomberman.entities.Bomb;
@@ -22,13 +23,14 @@ public class handingEvent extends load {
     public static int BombAlive = 0;
     
 
-    public handingEvent(List<Entity> entities, Scene scene, Bomber bomber) {
+    public handingEvent(List<Entity> entities, Scene scene, Bomber bomber, List<Bomb> bombs) {
         this.scene = scene;
         this.bomber = bomber;
         this.entities = entities;
+        this.bombs = bombs;
     }
     public static void clearBomb() {
-        entities.remove(index);
+        bombs.remove(index);
     }
     public void handing() {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -66,10 +68,10 @@ public class handingEvent extends load {
                                 Bomb.removed = false;
                                 int posXBomb = (bomber.getX() + 16) / Sprite.SCALED_SIZE;
                                 int posYBomb = (bomber.getY() + 16) / Sprite.SCALED_SIZE;
-                                Entity bomb = new Bomb(posXBomb, posYBomb, Sprite.bomb.getFxImage());
+                                Bomb bomb = new Bomb(posXBomb, posYBomb, Sprite.bomb.getFxImage());
                                 BombAlive++;
-                                entities.add(bomb);
-                                index = entities.size() - BombAlive;
+                                bombs.add(bomb);
+                                index = bombs.size() - BombAlive;
                                 Bomb.numberOfBomb--;
                                 break;
                             }
@@ -112,6 +114,12 @@ public class handingEvent extends load {
                             break;
                         }
                     }
+                } else {
+                    if (event.getCode() == KeyCode.ENTER) bomber.alive = true;
+                    goLeft = false;
+                    goRight = false;
+                    goDown = false;
+                    goUp = false;
                 }
             }
         });

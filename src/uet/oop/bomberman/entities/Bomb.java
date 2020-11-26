@@ -1,6 +1,8 @@
 package uet.oop.bomberman.entities;
 
 import javafx.scene.image.Image;
+import uet.oop.bomberman.HandingCollision.BomberCollision;
+import uet.oop.bomberman.HandingCollision.EnemyCollision;
 import uet.oop.bomberman.HandingCollision.canMove;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.handingEvent;
@@ -25,6 +27,17 @@ public class Bomb extends AnimatedEntitiy {
             timeAfter--;
             DirectionalExplosion.explosion(x, y);
             explode();
+            for(int i = 0; i < handingEvent.entities.size(); i++) {
+                if (handingEvent.entities.get(i) instanceof Bomber) {
+                    if(BomberCollision.withExplosion(x, y)) BomberCollision.bomber.dead();
+                } else if (handingEvent.entities.get(i) instanceof Balloon) {
+                    Balloon balloon = (Balloon) handingEvent.entities.get(i);
+                    if (balloon.withExplosion(x, y)) {
+                        balloon.dead();
+                        handingEvent.entities.remove(balloon);
+                    }
+                }
+            }
         } else {
             numberOfBomb++;
             handingEvent.BombAlive--;

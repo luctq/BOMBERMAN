@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class Level1 extends loadMap{
     private static int width;
-    String path = generalPath + "Level2.txt";
+    String path = generalPath + "Level1.txt";
     private static int height;
     private int level;
     public static String[] map;

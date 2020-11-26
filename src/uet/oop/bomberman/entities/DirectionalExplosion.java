@@ -47,7 +47,6 @@ public class DirectionalExplosion {
             x = x - 32;
             temp--;
         }
-        if (handingEvent.bomber.getX() > x) handingEvent.bomber.dead();
         Explosion left = new Explosion(x/ Sprite.SCALED_SIZE, y/ Sprite.SCALED_SIZE, Sprite.explosion_horizontal_left_last2.getFxImage());
         explosions.add(left);
         left.direction = 0;

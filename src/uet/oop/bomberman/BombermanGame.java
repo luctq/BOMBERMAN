@@ -30,6 +30,8 @@ public class BombermanGame extends Application {
     
     private GraphicsContext gc;
     private Canvas canvas;
+
+    private List<Bomb> bombs = new ArrayList<>();
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
     private List<Explosion> explosions = new ArrayList<>();
@@ -68,7 +70,7 @@ public class BombermanGame extends Application {
         level1.creatMap(stillObjects, background, entities);
         Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomberman);
-        handingEvent event = new handingEvent(entities, scene, (Bomber) bomberman);
+        handingEvent event = new handingEvent(entities, scene, (Bomber) bomberman, bombs);
         event.handing();
         DirectionalExplosion de = new DirectionalExplosion(entities, stillObjects, explosions);
         for (int i = 0; i < entities.size(); i++) {
@@ -89,6 +91,9 @@ public class BombermanGame extends Application {
         for (int i = 0; i < stillObjects.size(); i++) {
             stillObjects.get(i).update();
         }
+        for (int i = 0; i < bombs.size(); i++) {
+            bombs.get(i).update();
+        }
     }
 
     public void render() {
@@ -105,6 +110,9 @@ public class BombermanGame extends Application {
         }
         for(Explosion e : explosions) {
             e.render(gc);
+        }
+        for(Bomb b : bombs) {
+            b.render(gc);
         }
     }
 }

@@ -51,33 +51,32 @@ public class canExplosion {
 //                }
                     Entity grass = new Grass(temp1, temp2, Sprite.grass.getFxImage());
                     stillObjects.set(temp1 + 31 * temp2, grass);
-                    break;
+                    return;
                 }
                 case 'f': {
-                    System.out.println(map[temp2]);
                     map[temp2] = map[temp2].substring(0, temp1) + 'F' + map[temp2].substring(temp1 + 1);
                     System.out.println(map[temp2]);
                     Entity flameItem = new FlameItem(temp1, temp2, Sprite.powerup_flames.getFxImage());
                     stillObjects.set(temp1 + 31 * temp2, flameItem);
-                    break;
+                    return;
                 }
                 case 'b': {
                     map[temp2] = map[temp2].substring(0, temp1) + 'B' + map[temp2].substring(temp1 + 1);
                     Entity bombItem = new BombItem(temp1, temp2, Sprite.powerup_bombs.getFxImage());
                     stillObjects.set(temp1 + 31 * temp2, bombItem);
-                    break;
+                    return;
                 }
                 case 's': {
                     map[temp2] = map[temp2].substring(0, temp1) + 'S' + map[temp2].substring(temp1 + 1);
                     Entity speedItem = new SpeedItem(temp1, temp2, Sprite.powerup_speed.getFxImage());
                     stillObjects.set(temp1 + 31 * temp2, speedItem);
-                    break;
+                    return;
                 }
                 case 'x': {
                     map[temp2] = map[temp2].substring(0, temp1) + 'x' + map[temp2].substring(temp1 + 1);
                     Entity portal = new Portal(temp1, temp2, Sprite.portal.getFxImage());
                     stillObjects.set(temp1 + 31 * temp2, portal);
-                    break;
+                    return;
                 }
         }
 //        if (map[temp2].charAt(temp1) == '#') {
