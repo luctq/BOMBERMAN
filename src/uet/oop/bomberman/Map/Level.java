@@ -1,4 +1,4 @@
-package uet.oop.bomberman.entities.Map;
+package uet.oop.bomberman.Map;
 
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
@@ -8,12 +8,17 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
 
-public class Level1 extends loadMap{
+public class Level extends loadMap{
+    public int  number = 1;
     private static int width;
-    String path = generalPath + "Level1.txt";
     private static int height;
+    String path;
     private int level;
     public static String[] map;
+    public Level(int number) {
+        this.number = number;
+        path = generalPath + "Level" + number + ".txt";
+    }
     @Override
     public String[] loadFile(String path) throws FileNotFoundException {
         File file = new File(path);

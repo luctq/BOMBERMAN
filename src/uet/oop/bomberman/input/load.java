@@ -13,4 +13,6 @@ public abstract class load {
     public static Bomber bomber;
     public static List <Entity> entities;
     public static List <Bomb> bombs;
+    public static List<Entity> stillObjects;
+    public static List<Entity> background;
 }

@@ -1,4 +1,4 @@
-package uet.oop.bomberman.entities.Map;
+package uet.oop.bomberman.Map;
 
 import uet.oop.bomberman.entities.Entity;
 

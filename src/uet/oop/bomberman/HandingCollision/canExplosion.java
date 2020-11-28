@@ -1,18 +1,17 @@
 package uet.oop.bomberman.HandingCollision;
 
 import uet.oop.bomberman.entities.*;
-import uet.oop.bomberman.entities.Map.Level1;
+import uet.oop.bomberman.Map.Level;
 import uet.oop.bomberman.entities.item.BombItem;
 import uet.oop.bomberman.entities.item.FlameItem;
 import uet.oop.bomberman.entities.item.SpeedItem;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.input.handingEvent;
 
 import java.util.List;
 
 public class canExplosion {
     static List<Entity> stillObjects = DirectionalExplosion.stillObjects;
-    public static String[] map = Level1.map;
+    public static String[] map = Level.map;
     public static boolean explosionLeft(int posX, int posY) {
             int temp1 = posX / Sprite.SCALED_SIZE;
             int temp2 = posY / Sprite.SCALED_SIZE;

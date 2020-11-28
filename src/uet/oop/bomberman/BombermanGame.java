@@ -1,25 +1,21 @@
 package uet.oop.bomberman;
 
 import javafx.animation.AnimationTimer;
-import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
-import uet.oop.bomberman.entities.Map.Level1;
+import uet.oop.bomberman.Map.Level;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.handingEvent;
 
-import java.io.File;
+import java.awt.*;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class BombermanGame extends Application {
     public static int countUp = 0;
@@ -46,7 +42,6 @@ public class BombermanGame extends Application {
         // Tao Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
-
         // Tao root container
         Group root = new Group();
         root.getChildren().add(canvas);
@@ -66,11 +61,11 @@ public class BombermanGame extends Application {
             }
         };
         timer.start();
-        Level1 level1 = new Level1();
-        level1.creatMap(stillObjects, background, entities);
+        Level level = new Level(1);
+        level.creatMap(stillObjects, background, entities);
         Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomberman);
-        handingEvent event = new handingEvent(entities, scene, (Bomber) bomberman, bombs);
+        handingEvent event = new handingEvent(entities, scene, (Bomber) bomberman, bombs, stillObjects, background);
         event.handing();
         DirectionalExplosion de = new DirectionalExplosion(entities, stillObjects, explosions);
         for (int i = 0; i < entities.size(); i++) {

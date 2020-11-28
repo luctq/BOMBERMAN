@@ -1,21 +1,8 @@
 package uet.oop.bomberman.entities;
 
-import javafx.animation.AnimationTimer;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.scene.Group;
-import javafx.scene.SnapshotParameters;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.util.Duration;
 import uet.oop.bomberman.HandingCollision.canMove;
-import uet.oop.bomberman.entities.Map.Level1;
 import uet.oop.bomberman.graphics.Sprite;
-
-import java.util.List;
 
 public class Bomber extends AnimatedEntitiy {
         public boolean alive = true;
@@ -72,6 +59,13 @@ public class Bomber extends AnimatedEntitiy {
             this.img = Sprite.player_left.getFxImage();
         }
         public void backRight() {
+            this.img = Sprite.player_right.getFxImage();
+        }
+
+        public void reset() {
+            alive = true;
+            this.x = Sprite.SCALED_SIZE;
+            this.y = Sprite.SCALED_SIZE;
             this.img = Sprite.player_right.getFxImage();
         }
 }

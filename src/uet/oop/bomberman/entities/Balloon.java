@@ -2,15 +2,12 @@ package uet.oop.bomberman.entities;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.image.Image;
-import uet.oop.bomberman.HandingCollision.BomberCollision;
 import uet.oop.bomberman.HandingCollision.canMove;
-import uet.oop.bomberman.entities.Map.Level1;
+import uet.oop.bomberman.Map.Level;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.handingEvent;
 
 import java.util.Random;
-
-import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
 
 public class Balloon extends AnimatedEntitiy {
     boolean alive = true;
@@ -18,7 +15,7 @@ public class Balloon extends AnimatedEntitiy {
     Random rd = new Random();
     int pos;
     int timeDead = 30;
-    String[] map = Level1.map;
+    String[] map = Level.map;
     boolean removed = false;
     Sprite _sprite;
     int speed = 1;
@@ -99,6 +96,44 @@ public class Balloon extends AnimatedEntitiy {
         return false;
     }
 
+    public boolean collisionWithOtherBalloon() {
+        for (int i = 0; i < handingEvent.entities.size(); i++) {
+            if (handingEvent.entities.get(i) instanceof Balloon) {
+                if (!this.equals(handingEvent.entities.get(i))) {
+                    Balloon otherBalloon = (Balloon) handingEvent.entities.get(i);
+                    int Ox = (x + (Sprite.SCALED_SIZE + 5)/2) - (otherBalloon.getX() + (Sprite.SCALED_SIZE + 5)/2);
+                    int Oy = (y + (Sprite.SCALED_SIZE + 5)/2) - (otherBalloon.getY() + (Sprite.SCALED_SIZE + 5)/2);
+                    if (Ox < 0) Ox = -Ox;
+                    if (Oy < 0) Oy = -Oy;
+                    if (Ox <= Sprite.SCALED_SIZE + 5 && Oy <= Sprite.SCALED_SIZE + 5) return true;
+                }
+            }
+        }
+        return false;
+    }
+    public boolean testDirection(int pos) {
+        switch (pos) {
+            case 0: {
+                if (canMove.canMoveUp(x, y - speed)) return true;
+                return false;
+            }
+            case 1: {
+                if (canMove.canMoveRight(x + 10 + speed, y)) return true;
+                return false;
+            }
+            case 2: {
+                if (canMove.canMoveDown(x, y + speed)) return true;
+                return false;
+            }
+            case 3: {
+                if (canMove.canMoveLeft(x - speed, y)) return true;
+                else return false;
+            }
+            default: {
+                return false;
+            }
+        }
+    }
     public void caculateDirection(int pos) {
         switch (pos) {
             case 0: {
@@ -129,23 +164,11 @@ public class Balloon extends AnimatedEntitiy {
                         caculateDirection(pos);
                     } else {
                         pos = rd.nextInt(4);
-                        m = 50;
+                        while (!testDirection(pos)) {
+                            pos = rd.nextInt(4);
+                        }
+                        m = rd.nextInt(60);
                     }
-//                    if (m > 0){
-//                        m--;
-//                        moveLeft();
-//                    } else if (m > -45) {
-//                        m--;
-//                        moveUp();
-//                    } else if (m > -90) {
-//                        m--;
-//                        moveDown();
-//                    } else if (m > -135) {
-//                        m--;
-//                        moveRight();
-//                    } else {
-//                        m = 45;
-//                    }
                 }
 
             }
