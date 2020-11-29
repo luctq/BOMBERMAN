@@ -1,6 +1,6 @@
 package uet.oop.bomberman.HandingCollision;
 
-import uet.oop.bomberman.entities.Balloon;
+import uet.oop.bomberman.entities.enemy.Balloon;
 import uet.oop.bomberman.entities.DirectionalExplosion;
 import uet.oop.bomberman.graphics.Sprite;
 

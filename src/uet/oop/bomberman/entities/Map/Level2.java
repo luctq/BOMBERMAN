@@ -1,6 +1,7 @@
 package uet.oop.bomberman.entities.Map;
 
 import uet.oop.bomberman.entities.*;
+import uet.oop.bomberman.entities.enemy.Balloon;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.File;
