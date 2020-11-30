@@ -1,27 +1,28 @@
 package uet.oop.bomberman.HandingCollision;
 
+import uet.oop.bomberman.entities.Enemy;
 import uet.oop.bomberman.entities.enemy.Balloon;
 import uet.oop.bomberman.entities.DirectionalExplosion;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class EnemyCollision {
-    public static boolean withExplosion(Balloon balloon, int x, int y) {
-        if (balloon.getY() >= y && balloon.getY() <= y + Sprite.SCALED_SIZE ||
-                balloon.getY() + 32 >= y && balloon.getY() + 32 <= y + Sprite.SCALED_SIZE) {
-            if (balloon.getX() > x - Sprite.SCALED_SIZE * DirectionalExplosion.radius
-                    && balloon.getX() < x + Sprite.SCALED_SIZE * (DirectionalExplosion.radius + 1)) {
+    public static boolean withExplosion(Enemy enemy, int x, int y) {
+        if (enemy.getY() >= y && enemy.getY() <= y + Sprite.SCALED_SIZE ||
+                enemy.getY() + 32 >= y && enemy.getY() + 32 <= y + Sprite.SCALED_SIZE) {
+            if (enemy.getX() > x - Sprite.SCALED_SIZE * DirectionalExplosion.radius
+                    && enemy.getX() < x + Sprite.SCALED_SIZE * (DirectionalExplosion.radius + 1)) {
                 return true;
-            } else if (balloon.getX() + 32 > x - Sprite.SCALED_SIZE * DirectionalExplosion.radius
-                    && balloon.getX() + 32 < x + Sprite.SCALED_SIZE * (DirectionalExplosion.radius+1)) {
+            } else if (enemy.getX() + 32 > x - Sprite.SCALED_SIZE * DirectionalExplosion.radius
+                    && enemy.getX() + 32 < x + Sprite.SCALED_SIZE * (DirectionalExplosion.radius+1)) {
                 return true;
             }
-        } else if ((balloon.getX() >= x && balloon.getX() <= x + Sprite.SCALED_SIZE) ||
-                (balloon.getX() + 32 <= x && balloon.getX() + 32 <= x + Sprite.SCALED_SIZE)) {
-            if (balloon.getY() > y - Sprite.SCALED_SIZE * DirectionalExplosion.radius
-                    && balloon.getY() < y + Sprite.SCALED_SIZE * (DirectionalExplosion.radius + 1)) {
+        } else if ((enemy.getX() >= x && enemy.getX() <= x + Sprite.SCALED_SIZE) ||
+                (enemy.getX() + 32 <= x && enemy.getX() + 32 <= x + Sprite.SCALED_SIZE)) {
+            if (enemy.getY() > y - Sprite.SCALED_SIZE * DirectionalExplosion.radius
+                    && enemy.getY() < y + Sprite.SCALED_SIZE * (DirectionalExplosion.radius + 1)) {
                 return true;
-            } else if (balloon.getY() + 32 > y - Sprite.SCALED_SIZE * DirectionalExplosion.radius
-                    && balloon.getY() + 32 < y + Sprite.SCALED_SIZE * (DirectionalExplosion.radius + 1)) {
+            } else if (enemy.getY() + 32 > y - Sprite.SCALED_SIZE * DirectionalExplosion.radius
+                    && enemy.getY() + 32 < y + Sprite.SCALED_SIZE * (DirectionalExplosion.radius + 1)) {
                 return true;
             }
         }

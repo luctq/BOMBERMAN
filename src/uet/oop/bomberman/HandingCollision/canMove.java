@@ -1,14 +1,14 @@
 package uet.oop.bomberman.HandingCollision;
 
+import uet.oop.bomberman.Map.Level;
 import uet.oop.bomberman.entities.*;
-import uet.oop.bomberman.entities.Map.Level1;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.List;
 
 public class canMove {
     public static List<Entity> stillObjects = DirectionalExplosion.stillObjects;
-    public static String[] map = Level1.map;
+    public static String[] map = Level.map;
     public static int posXBomb = -1;
     public static int posYBomb = -1;
 

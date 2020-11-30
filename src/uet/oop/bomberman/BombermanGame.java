@@ -8,11 +8,11 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
-import uet.oop.bomberman.entities.Map.Level1;
-import uet.oop.bomberman.entities.enemy.Balloon;
+import uet.oop.bomberman.Map.Level;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.handingEvent;
-
+import uet.oop.bomberman.entities.enemy.*;
+import java.awt.*;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public class BombermanGame extends Application {
     public static boolean goUp, goDown, goLeft, goRight;
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
-    
+
     private GraphicsContext gc;
     private Canvas canvas;
 
@@ -42,7 +42,6 @@ public class BombermanGame extends Application {
         // Tao Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
-
         // Tao root container
         Group root = new Group();
         root.getChildren().add(canvas);
@@ -62,11 +61,11 @@ public class BombermanGame extends Application {
             }
         };
         timer.start();
-        Level1 level1 = new Level1();
-        level1.creatMap(stillObjects, background, entities);
+        Level level = new Level(1);
+        level.creatMap(stillObjects, background, entities);
         Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomberman);
-        handingEvent event = new handingEvent(entities, scene, (Bomber) bomberman, bombs);
+        handingEvent event = new handingEvent(entities, scene, (Bomber) bomberman, bombs, stillObjects, background);
         event.handing();
         DirectionalExplosion de = new DirectionalExplosion(entities, stillObjects, explosions);
         for (int i = 0; i < entities.size(); i++) {
@@ -90,6 +89,9 @@ public class BombermanGame extends Application {
         for (int i = 0; i < bombs.size(); i++) {
             bombs.get(i).update();
         }
+        for (int i = 0; i < background.size(); i++) {
+            background.get(i).update();
+        }
     }
 
     public void render() {
@@ -97,7 +99,6 @@ public class BombermanGame extends Application {
         for(Entity e : background) {
             e.render(gc);
         }
-
         for(Entity e : stillObjects) {
             e.render(gc);
         }

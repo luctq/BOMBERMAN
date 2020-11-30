@@ -3,12 +3,10 @@ package uet.oop.bomberman.entities;
 import javafx.animation.AnimationTimer;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.HandingCollision.canMove;
-import uet.oop.bomberman.entities.Map.Level1;
+import uet.oop.bomberman.Map.Level;
 import uet.oop.bomberman.entities.enemy.AI;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.handingEvent;
-
-import java.util.Random;
 
 public abstract class Enemy extends AnimatedEntitiy{
     public boolean alive = true;
@@ -16,14 +14,16 @@ public abstract class Enemy extends AnimatedEntitiy{
     public AI ai;
     public int timeDead = 30;
     public int m = 90;
+//    public Random random;
     public int _direction;
-    public int speed = 1;
+    public int speed ;
     public Sprite _deadSprite;
-    String[] map = Level1.map;
+    String[] map = Level.map;
     boolean removed = false;
-    public Enemy(int x, int y, Image img, Sprite dead){
+    public Enemy(int x, int y, Image img, Sprite dead, int _speed){
         super(x, y, img);
         _deadSprite = dead;
+        speed = _speed;
     }
     @Override
     public void update() {
@@ -56,12 +56,13 @@ public abstract class Enemy extends AnimatedEntitiy{
     }
     public void dead() {
         alive = false;
-//        this.img = Sprite.balloom_dead.getFxImage();
-        this.img = Sprite.movingSprite(Sprite.mob_dead1, Sprite.mob_dead2, Sprite.mob_dead3, _animate, 60).getFxImage();
+        chooseSprite(0);
+        this.img = _sprite.getFxImage();
+//        this.img = Sprite.movingSprite(Sprite.mob_dead1, Sprite.mob_dead2, Sprite.mob_dead3, _animate, 60).getFxImage();
     }
     public void moveDown() {
         kill();
-        chooseSprite(0);
+        chooseSprite(1);
         this.img = _sprite.getFxImage();
         if(canMove.canMoveDown(x, y + speed)) this.y = this.y + speed;
         else m = 0;
@@ -77,7 +78,7 @@ public abstract class Enemy extends AnimatedEntitiy{
 
     public void moveLeft() {
         kill();
-        chooseSprite(3);
+        chooseSprite(2);
         this.img = _sprite.getFxImage();
         if (canMove.canMoveLeft(x - speed, y)) this.x = this.x - speed;
         else m = 0;
@@ -113,7 +114,7 @@ public abstract class Enemy extends AnimatedEntitiy{
             }
         }
     }
-    public void caculateDirection(int _direction) {
+    public void caculateDirection() {
 //        _direction = ai.calculateDirection();
         switch (_direction) {
             case 0: {
@@ -141,13 +142,13 @@ public abstract class Enemy extends AnimatedEntitiy{
                 if (alive) {
                     if (m > 0) {
                         m--;
-                        caculateDirection(_direction);
+                        caculateDirection();
                     } else {
                         _direction = ai.calculateDirection();
                         while (!testDirection(_direction)) {
                             _direction = ai.calculateDirection();
                         }
-                        m = _direction*10;
+                        m = _direction*_direction;
                     }
 //                    if (m > 0){
 //                        m--;
