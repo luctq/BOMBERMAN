@@ -2,6 +2,7 @@ package uet.oop.bomberman.HandingCollision;
 
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.Map.Level;
+import uet.oop.bomberman.entities.bomb.DirectionalExplosion;
 import uet.oop.bomberman.entities.item.BombItem;
 import uet.oop.bomberman.entities.item.FlameItem;
 import uet.oop.bomberman.entities.item.SpeedItem;

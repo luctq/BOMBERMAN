@@ -1,30 +1,28 @@
 package uet.oop.bomberman.input;
 
-import com.sun.deploy.config.JREInfo;
 import javafx.animation.AnimationTimer;
-import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import uet.oop.bomberman.HandingCollision.canExplosion;
 import uet.oop.bomberman.HandingCollision.canMove;
 import uet.oop.bomberman.Map.Level;
 import uet.oop.bomberman.entities.Balloon;
-import uet.oop.bomberman.entities.Bomb;
+import uet.oop.bomberman.entities.Oneal;
+import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.Bomber;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class handingEvent extends load {
     public static boolean goUp, goDown, goLeft, goRight;
     public static int index;
     public static int BombAlive = 0;
-    
+
 
     public handingEvent(List<Entity> entities, Scene scene, Bomber bomber, List<Bomb> bombs, List<Entity> stillObjects, List<Entity> background) {
         this.scene = scene;
@@ -71,9 +69,10 @@ public class handingEvent extends load {
                         case SPACE: {
                             if (Bomb.numberOfBomb > 0) {
                                 Bomb.removed = false;
-                                int posXBomb = (bomber.getX() + 16) / Sprite.SCALED_SIZE;
-                                int posYBomb = (bomber.getY() + 16) / Sprite.SCALED_SIZE;
-                                Bomb bomb = new Bomb(posXBomb, posYBomb, Sprite.bomb.getFxImage());
+                                Bomber.inBomb = true;
+                                canMove.posXBomb = (bomber.getX() + 16) / Sprite.SCALED_SIZE;
+                                canMove.posYBomb = (bomber.getY() + 16) / Sprite.SCALED_SIZE;
+                                Bomb bomb = new Bomb(canMove.posXBomb, canMove.posYBomb, Sprite.bomb.getFxImage());
                                 BombAlive++;
                                 bombs.add(bomb);
                                 index = bombs.size() - BombAlive;
@@ -123,16 +122,31 @@ public class handingEvent extends load {
                     if (event.getCode() == KeyCode.ENTER){
                         bomber.reset();
                         stillObjects.clear();
+                        for (int i = 0; i < entities.size(); i++) {
+                            if (entities.get(i) instanceof Balloon) {
+                                Balloon balloon = (Balloon) entities.get(i);
+                                balloon.alive = false;
+                            } else if (entities.get(i) instanceof Oneal) {
+                                Oneal oneal = (Oneal) entities.get(i);
+                                oneal.alive = false;
+                            }
+                        }
                         entities.clear();
                         background.clear();
                         entities.add(bomber);
-                        Level level = new Level(2);
+                        Level level = new Level(1);
                         try {
                             level.creatMap(stillObjects, background, entities);
+                            canMove.map = Level.map;
+                            canExplosion.map = Level.map;
+                            Balloon.map = Level.map;
                             for (int i = 0; i < entities.size(); i++) {
                                 if (entities.get(i) instanceof Balloon) {
                                     Balloon balloon = (Balloon) entities.get(i);
                                     balloon.move();
+                                } else if (entities.get(i) instanceof Oneal) {
+                                    Oneal oneal = (Oneal) entities.get(i);
+                                    oneal.move();
                                 }
                             }
                         } catch (FileNotFoundException e) {

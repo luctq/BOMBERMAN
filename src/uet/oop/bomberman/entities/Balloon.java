@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.image.Image;
+import uet.oop.bomberman.HandingCollision.BombCollsion;
 import uet.oop.bomberman.HandingCollision.canMove;
 import uet.oop.bomberman.Map.Level;
 import uet.oop.bomberman.graphics.Sprite;
@@ -10,12 +11,12 @@ import uet.oop.bomberman.input.handingEvent;
 import java.util.Random;
 
 public class Balloon extends AnimatedEntitiy {
-    boolean alive = true;
+    public boolean alive = true;
     int m = 90;
     Random rd = new Random();
     int pos;
     int timeDead = 30;
-    String[] map = Level.map;
+    public static String[] map = Level.map;
     boolean removed = false;
     Sprite _sprite;
     int speed = 1;
@@ -40,7 +41,7 @@ public class Balloon extends AnimatedEntitiy {
         _sprite = Sprite.movingSprite(Sprite.balloom_right1, Sprite.balloom_right2,
                 Sprite.balloom_right3, _animate, 20);
         this.img = _sprite.getFxImage();
-        if(canMove.canMoveDown(x, y + speed)) this.y = this.y + speed;
+        if(!BombCollsion.withEntities(x, y + speed, canMove.posXBomb, canMove.posYBomb) && canMove.canMoveDown(x, y + speed)) this.y = this.y + speed;
         else m = 0;
     }
 
@@ -49,7 +50,7 @@ public class Balloon extends AnimatedEntitiy {
         _sprite = Sprite.movingSprite(Sprite.balloom_left1, Sprite.balloom_left2,
                 Sprite.balloom_left3, _animate, 20);
         this.img = _sprite.getFxImage();
-        if (canMove.canMoveUp(x, y - speed)) this.y = this.y - speed;
+        if (!BombCollsion.withEntities(x, y, canMove.posXBomb, canMove.posYBomb) && canMove.canMoveUp(x, y - speed)) this.y = this.y - speed;
         else m = 0;
     }
 
@@ -58,7 +59,7 @@ public class Balloon extends AnimatedEntitiy {
         _sprite = Sprite.movingSprite(Sprite.balloom_left1, Sprite.balloom_left2,
                 Sprite.balloom_left3, _animate, 20);
         this.img = _sprite.getFxImage();
-        if (canMove.canMoveLeft(x - speed, y)) this.x = this.x - speed;
+        if (!BombCollsion.withEntities(x, y, canMove.posXBomb, canMove.posYBomb) && canMove.canMoveLeft(x - speed, y)) this.x = this.x - speed;
         else m = 0;
     }
 
@@ -67,7 +68,7 @@ public class Balloon extends AnimatedEntitiy {
         _sprite = Sprite.movingSprite(Sprite.balloom_right1, Sprite.balloom_right2,
                 Sprite.balloom_right3, _animate, 20);
         this.img = _sprite.getFxImage();
-        if (canMove.canMoveRight(x + 10 + speed, y)) this.x = this.x + speed;
+        if (!BombCollsion.withEntities(x, y, canMove.posXBomb, canMove.posYBomb) && canMove.canMoveRight(x + 10 + speed, y)) this.x = this.x + speed;
         else m = 0;
     }
     public void dead() {

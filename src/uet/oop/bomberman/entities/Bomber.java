@@ -5,6 +5,7 @@ import uet.oop.bomberman.HandingCollision.canMove;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Bomber extends AnimatedEntitiy {
+        public static boolean inBomb = true;
         public boolean alive = true;
         public static int speed = 2;
         boolean up, down, right, left;
@@ -15,7 +16,6 @@ public class Bomber extends AnimatedEntitiy {
         @Override
         public void update() {
             animate();
-
         }
         public void moveDown() {
             _sprite = Sprite.player_down;

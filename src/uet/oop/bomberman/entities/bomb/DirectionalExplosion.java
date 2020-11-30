@@ -1,10 +1,9 @@
-package uet.oop.bomberman.entities;
+package uet.oop.bomberman.entities.bomb;
 
-import javafx.scene.SnapshotParameters;
-import javafx.scene.canvas.GraphicsContext;
 import uet.oop.bomberman.HandingCollision.canExplosion;
+import uet.oop.bomberman.entities.Bomber;
+import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.input.handingEvent;
 
 import java.util.List;
 
@@ -23,19 +22,31 @@ public class DirectionalExplosion {
     public static void explosion(int posX, int posY) {
         if (canExplosion.explosionLeft(posX - 32, posY)) {
             Left(posX - 32, posY);
-            canExplosion.destroy(posX - 32, posY);
+            for (int i = 1; i <= radius; i++) {
+                canExplosion.destroy(posX - 32 * i, posY);
+            }
+
         }
         if (canExplosion.explosionRight(posX + 32, posY)){
             Right(posX + 32, posY);
-            canExplosion.destroy(posX + 32, posY);
+            for (int i = 1; i <=  radius; i++) {
+                canExplosion.destroy(posX + 32 * i, posY);
+            }
+
         }
         if (canExplosion.explosionUp(posX, posY - 32)) {
             Down(posX, posY - 32);
-            canExplosion.destroy(posX, posY - 32);
+            for (int i = 1; i <= radius; i++) {
+                canExplosion.destroy(posX, posY - 32 * i);
+
+            }
         }
         if (canExplosion.explosionDown(posX, posY + 32)) {
             Up(posX, posY + 32);
-            canExplosion.destroy(posX, posY + 32);
+            for (int i = 0; i <= radius; i++) {
+                canExplosion.destroy(posX, posY + 32 * i);
+            }
+
         }
 
     }
