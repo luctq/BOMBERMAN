@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.image.Image;
+import javafx.scene.media.MediaPlayer;
 import uet.oop.bomberman.HandingCollision.BombCollsion;
 import uet.oop.bomberman.HandingCollision.canMove;
 import uet.oop.bomberman.Map.Level;
@@ -10,6 +11,7 @@ import uet.oop.bomberman.entities.enemy.AI;
 import uet.oop.bomberman.entities.enemy.Balloon;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.handingEvent;
+import uet.oop.bomberman.sound.MusicLoader;
 
 import java.util.Random;
 
@@ -27,11 +29,13 @@ public abstract class Enemy extends AnimatedEntitiy {
     protected  double MAX_STEPS;
     protected  double rest;
     protected double _steps;
+    MediaPlayer killing;
     public Enemy(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
         MAX_STEPS = Sprite.DEFAULT_SIZE / speed;
         rest = (MAX_STEPS - (int) MAX_STEPS) / MAX_STEPS;
         _steps = MAX_STEPS;
+        killing = MusicLoader.getInstance().getSound("killing");
     }
     @Override
     public void update() {
@@ -84,6 +88,8 @@ public abstract class Enemy extends AnimatedEntitiy {
     public void dead() {
         alive = false;
         chooseSprite(0);
+        killing.stop();
+        killing.play();
 //        this.img = Sprite.balloom_dead.getFxImage();
 //        this.img = Sprite.movingSprite(Sprite.mob_dead1, Sprite.mob_dead2, Sprite.mob_dead3, _animate, 20).getFxImage();
     }
@@ -108,21 +114,21 @@ public abstract class Enemy extends AnimatedEntitiy {
         return false;
     }
 
-    public boolean collisionWithOtherBalloon() {
-        for (int i = 0; i < handingEvent.entities.size(); i++) {
-            if (handingEvent.entities.get(i) instanceof Balloon) {
-                if (!this.equals(handingEvent.entities.get(i))) {
-                    Balloon otherBalloon = (Balloon) handingEvent.entities.get(i);
-                    int Ox = (x + (Sprite.SCALED_SIZE + 5)/2) - (otherBalloon.getX() + (Sprite.SCALED_SIZE + 5)/2);
-                    int Oy = (y + (Sprite.SCALED_SIZE + 5)/2) - (otherBalloon.getY() + (Sprite.SCALED_SIZE + 5)/2);
-                    if (Ox < 0) Ox = -Ox;
-                    if (Oy < 0) Oy = -Oy;
-                    if (Ox <= Sprite.SCALED_SIZE + 5 && Oy <= Sprite.SCALED_SIZE + 5) return true;
-                }
-            }
-        }
-        return false;
-    }
+//    public boolean collisionWithOtherBalloon() {
+//        for (int i = 0; i < handingEvent.entities.size(); i++) {
+//            if (handingEvent.entities.get(i) instanceof Balloon) {
+//                if (!this.equals(handingEvent.entities.get(i))) {
+//                    Balloon otherBalloon = (Balloon) handingEvent.entities.get(i);
+//                    int Ox = (x + (Sprite.SCALED_SIZE + 5)/2) - (otherBalloon.getX() + (Sprite.SCALED_SIZE + 5)/2);
+//                    int Oy = (y + (Sprite.SCALED_SIZE + 5)/2) - (otherBalloon.getY() + (Sprite.SCALED_SIZE + 5)/2);
+//                    if (Ox < 0) Ox = -Ox;
+//                    if (Oy < 0) Oy = -Oy;
+//                    if (Ox <= Sprite.SCALED_SIZE + 5 && Oy <= Sprite.SCALED_SIZE + 5) return true;
+//                }
+//            }
+//        }
+//        return false;
+//    }
     public boolean testDirection(int pos) {
         switch (pos) {
             case 0: {

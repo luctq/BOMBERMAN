@@ -1,0 +1,4 @@
+3
+main res/music/main.mp3
+bomb res/music/bomb.mp3
+killing res/music/killing.mp3

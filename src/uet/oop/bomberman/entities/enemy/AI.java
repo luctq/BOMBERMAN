@@ -13,9 +13,9 @@ public class AI {
     //    public int calculateDirection(){
 //        return random.nextInt(4);
 //    }
-    public AI(){
-
-    }
+//    public AI(){
+//
+//    }
     public AI(Bomber bomber, Enemy enemy){
         this.bomber = bomber;
         this.enemy = enemy;

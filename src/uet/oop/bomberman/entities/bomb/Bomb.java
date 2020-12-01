@@ -1,6 +1,8 @@
 package uet.oop.bomberman.entities.bomb;
 
 import javafx.scene.image.Image;
+import javafx.scene.media.MediaPlayer;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.HandingCollision.BomberCollision;
 import uet.oop.bomberman.HandingCollision.EnemyCollision;
 import uet.oop.bomberman.HandingCollision.canMove;
@@ -10,23 +12,30 @@ import uet.oop.bomberman.entities.Bomber;
 import uet.oop.bomberman.entities.enemy.Oneal;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.handingEvent;
+import uet.oop.bomberman.sound.MusicLoader;
 
 public class Bomb extends AnimatedEntitiy {
     public static int numberOfBomb = 1;
     public int timeToExplode;
     public int timeAfter;
     Sprite _sprite;
+    MediaPlayer bomb;
 
     public Bomb(int x, int y, Image img) {
         super(x, y, img);
         timeToExplode = 120;
         timeAfter = 10;
+        bomb = MusicLoader.getInstance().getSound("bomb");
     }
     @Override
     public void update() {
-        if (timeToExplode > 0) timeToExplode--;
+        if (timeToExplode > 0) {
+            timeToExplode--;
+        }
         if(timeToExplode != 0) {
             change();
+            bomb.stop();
+            bomb.play();
         } else if (timeAfter != 0){
             timeAfter--;
             DirectionalExplosion.explosion(x, y);

@@ -6,6 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
@@ -17,8 +18,10 @@ import uet.oop.bomberman.entities.enemy.Balloon;
 import uet.oop.bomberman.entities.enemy.Oneal;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.handingEvent;
+import uet.oop.bomberman.sound.MusicLoader;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +61,14 @@ public class BombermanGame extends Application {
         // Them scene vao stage
         stage.setScene(scene);
         stage.show();
+        try {
+            MusicLoader musicLoader = MusicLoader.getInstance();
+            musicLoader.LoadData();
+        }catch (IOException e){
+            System.out.println(e.getMessage());
+        }
+        MediaPlayer m1 = MusicLoader.getInstance().getSound("main");
+        MediaPlayer item = MusicLoader.getInstance().getSound("item");
 
         AnimationTimer timer = new AnimationTimer() {
             @Override
@@ -67,6 +78,7 @@ public class BombermanGame extends Application {
             }
         };
         timer.start();
+        m1.play();
         Level level = new Level(1);
         level.creatMap(stillObjects, background, entities);
         Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
@@ -75,7 +87,7 @@ public class BombermanGame extends Application {
         event.handing();
         DirectionalExplosion de = new DirectionalExplosion(entities, stillObjects, explosions);
         for (int i = 0; i < entities.size(); i++) {
-            if (entities.get(i) instanceof Balloon) {
+            if (entities.get(i) instanceof Enemy) {
                 Balloon balloon = (Balloon) entities.get(i);
                 balloon.move();
             } else if (entities.get(i) instanceof Oneal) {
