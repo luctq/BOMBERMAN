@@ -3,7 +3,7 @@ package uet.oop.bomberman.Map;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.enemy.*;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.entities.enemy.*;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -62,10 +62,27 @@ public class Level extends loadMap{
                     }
                     case '2': {
                         Entity object = new Grass(i, j, Sprite.grass.getFxImage());
-                        background.add(object);
+                        stillObjects.add(object);
                         Entity oneal = new Oneal(i, j, Sprite.oneal_right1.getFxImage());
                         entities.add(oneal);
                         break;
+                    }
+                    case '3' : {
+                        Entity object = new Grass(i, j, Sprite.grass.getFxImage());
+                        stillObjects.add(object);
+                        Entity doll = new Doll(i, j, Sprite.doll_right1.getFxImage());
+                        entities.add(doll);
+                        break;
+                    } case '4' : {
+                        Entity object = new Grass(i, j, Sprite.grass.getFxImage());
+                        stillObjects.add(object);
+                        Entity minvo = new Minvo(i, j, Sprite.doll_right1.getFxImage());
+                        entities.add(minvo);
+                    } case '5' : {
+                        Entity object = new Grass(i, j, Sprite.grass.getFxImage());
+                        stillObjects.add(object);
+                        Entity Kondoria = new Kondoria(i, j, Sprite.doll_right1.getFxImage());
+                        entities.add(Kondoria);
                     }
                     default: {
                         Entity object = new Grass(i, j, Sprite.grass.getFxImage());

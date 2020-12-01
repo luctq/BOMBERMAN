@@ -1,16 +1,13 @@
-package uet.oop.bomberman.entities;
+package uet.oop.bomberman.entities.bomb;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.HandingCollision.BomberCollision;
+import uet.oop.bomberman.HandingCollision.EnemyCollision;
 import uet.oop.bomberman.HandingCollision.canMove;
-<<<<<<< Updated upstream:src/uet/oop/bomberman/entities/Bomb.java
-import uet.oop.bomberman.entities.enemy.Balloon;
-=======
 import uet.oop.bomberman.entities.AnimatedEntitiy;
 import uet.oop.bomberman.entities.enemy.Balloon;
 import uet.oop.bomberman.entities.Bomber;
 import uet.oop.bomberman.entities.enemy.Oneal;
->>>>>>> Stashed changes:src/uet/oop/bomberman/entities/bomb/Bomb.java
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.handingEvent;
 
@@ -23,7 +20,7 @@ public class Bomb extends AnimatedEntitiy {
     public Bomb(int x, int y, Image img) {
         super(x, y, img);
         timeToExplode = 120;
-        timeAfter = 20;
+        timeAfter = 10;
     }
     @Override
     public void update() {
@@ -39,9 +36,13 @@ public class Bomb extends AnimatedEntitiy {
                     if(BomberCollision.withExplosion(x, y)) BomberCollision.bomber.dead();
                 } else if (handingEvent.entities.get(i) instanceof Balloon) {
                     Balloon balloon = (Balloon) handingEvent.entities.get(i);
-                    if (balloon.withExplosion(x, y)) {
+                    if (EnemyCollision.withExplosion(balloon.getX(), balloon.getY(), x, y)) {
                         balloon.dead();
-                        handingEvent.entities.remove(balloon);
+                    }
+                } else if (handingEvent.entities.get(i) instanceof Oneal) {
+                    Oneal oneal = (Oneal) handingEvent.entities.get(i);
+                    if (EnemyCollision.withExplosion(oneal.getX(), oneal.getY(), x, y)) {
+                        oneal.dead();
                     }
                 }
             }
