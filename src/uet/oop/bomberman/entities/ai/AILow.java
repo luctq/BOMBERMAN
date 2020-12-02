@@ -4,9 +4,7 @@ import uet.oop.bomberman.entities.Bomber;
 import uet.oop.bomberman.entities.Enemy;
 
 public class AILow extends AI {
-    public AILow(Bomber bomber, Enemy enemy){
-        this.bomber = bomber;
-        this.enemy = enemy;
+    public AILow(){
     }
     @Override
     public int calculateDirection() {

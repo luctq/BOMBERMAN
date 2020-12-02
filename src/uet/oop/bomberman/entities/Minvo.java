@@ -10,8 +10,8 @@ public class Minvo extends Enemy {
     public Minvo(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
         _sprite = Sprite.minvo_left1;
-        ai = new AIMedium(handingEvent.bomber, this);
-        _direction = ai.calculateDirection();
+        aiMedium = new AIMedium(this);
+        _direction = aiMedium.calculateDirection();
     }
 
     protected void chooseSprite(int i) {
@@ -28,5 +28,10 @@ public class Minvo extends Enemy {
                 _sprite = Sprite.movingSprite(Sprite.minvo_left1, Sprite.minvo_left2, Sprite.minvo_left3, _animate, 60);
                 break;
         }
+    }
+
+    @Override
+    public void move() {
+
     }
 }

@@ -20,17 +20,20 @@ public abstract class Enemy extends AnimatedEntitiy {
     public int timeDead = 30;
     public static String[] map = Level.map;
     public boolean removed = false;
-    public int speed = 1;
+    public int speed =1;
     public int _direction;
-    public AI ai;
+    public AI aiMedium;
+    public AI aiLow;
     protected  double MAX_STEPS;
     protected  double rest;
-    protected double _steps;
+    protected double _steps, _steps2;
     public Enemy(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
+
         MAX_STEPS = Sprite.SCALED_SIZE / speed;
         rest = (MAX_STEPS - (int) MAX_STEPS) / MAX_STEPS;
         _steps = MAX_STEPS;
+        _steps2 = 0;
     }
     @Override
     public void update() {
@@ -52,7 +55,9 @@ public abstract class Enemy extends AnimatedEntitiy {
 //                Sprite.balloom_right3, _animate, 20);
         this.img = _sprite.getFxImage();
         if(!BombCollsion.withEntities(x, y + speed, canMove.posXBomb, canMove.posYBomb) && canMove.canMoveDown(x, y + speed)) this.y = this.y + speed;
-        else _steps = 0;
+        else {
+            _steps = 0;
+        }
     }
 
     public void moveUp() {
@@ -150,26 +155,6 @@ public abstract class Enemy extends AnimatedEntitiy {
             }
         }
     }
-    public void move() {
-        AnimationTimer timer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                if (alive && handingEvent.bomber.alive) {
-                    if (_steps <= 0){
-                        _direction = ai.calculateDirection();
-                        _steps = MAX_STEPS;
-                    }
-                    if (testDirection(_direction)){
-                        _steps -= 1+rest;
-                        caculateDirection();
-                    }else{
-                        _steps = 0;
-                    }
-                }
-
-            }
-        };
-        timer.start();
-    }
+    public abstract void move();
     protected abstract void chooseSprite(int i);
 }

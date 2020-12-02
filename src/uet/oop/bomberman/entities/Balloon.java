@@ -1,5 +1,6 @@
 package uet.oop.bomberman.entities;
 
+import javafx.animation.AnimationTimer;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Enemy;
 import uet.oop.bomberman.entities.ai.AI;
@@ -12,8 +13,9 @@ public class Balloon extends Enemy {
     public Balloon(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
         _sprite = Sprite.balloom_left1;
-        ai = new AILow(handingEvent.bomber, this);
-        _direction = ai.calculateDirection();
+        aiLow = new AILow();
+        _direction = aiLow.calculateDirection();
+        speed = 1;
     }
     protected void chooseSprite(int i){
         switch(i) {
@@ -30,4 +32,28 @@ public class Balloon extends Enemy {
                 break;
         }
     }
+
+    @Override
+    public void move() {
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                if (alive && handingEvent.bomber.alive) {
+                    if (_steps <= 0){
+                        _direction = aiLow.calculateDirection();
+                        _steps = MAX_STEPS;
+                    }
+                    if (testDirection(_direction)){
+                        _steps -= 1+rest;
+                        caculateDirection();
+                    }else{
+                        _steps = 0;
+                    }
+                }
+
+            }
+        };
+        timer.start();
+    }
+
 }

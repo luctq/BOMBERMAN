@@ -179,7 +179,11 @@ public class handingEvent extends load {
                 } else if (entities.get(i) instanceof Oneal) {
                     Oneal oneal = (Oneal) entities.get(i);
                     oneal.move();
+                }else if (entities.get(i) instanceof Doll) {
+                    Doll doll = (Doll) entities.get(i);
+                    doll.move();
                 }
+
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();

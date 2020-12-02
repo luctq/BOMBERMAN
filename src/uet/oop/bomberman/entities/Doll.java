@@ -1,16 +1,25 @@
 package uet.oop.bomberman.entities;
 
+import javafx.animation.AnimationTimer;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.ai.AILow;
+import uet.oop.bomberman.entities.ai.AIMedium;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.handingEvent;
 
+import java.util.Random;
+
 public class Doll extends Enemy {
+
+    Random random = new Random();
+    //Bomber _bomber = handingEvent.bomber;
+
     public Doll(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
         _sprite = Sprite.doll_left1;
-        ai = new AILow(handingEvent.bomber, this);
-        _direction = ai.calculateDirection();
+        aiLow = new AILow();
+        aiMedium = new AIMedium(this);
+        _direction = aiMedium.calculateDirection();
         speed = 2;
     }
     protected void chooseSprite(int i){
@@ -28,4 +37,42 @@ public class Doll extends Enemy {
                 break;
         }
     }
+
+
+    @Override
+    public void move() {
+//        AnimationTimer timer = new AnimationTimer() {
+//            @Override
+//            public void handle(long now) {
+//                if (alive && handingEvent.bomber.alive) {
+//                    kill();
+//                    _direction = ai.calculateDirection();
+//                    caculateDirection();
+//                }
+//
+//            }
+//        };
+//        timer.start();
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                if (alive && handingEvent.bomber.alive) {
+                    if (_steps <= 0){
+                        _direction = aiMedium.calculateDirection();
+                        _steps = MAX_STEPS;
+                    }
+
+                    if (testDirection(_direction)){
+                        _steps -= 1+rest;
+                        caculateDirection();
+                    }else{
+                        _steps = 0;
+                    }
+                }
+
+            }
+        };
+        timer.start();
+    }
+
 }

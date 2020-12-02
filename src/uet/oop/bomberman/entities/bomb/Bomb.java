@@ -8,10 +8,7 @@ import uet.oop.bomberman.Game;
 import uet.oop.bomberman.HandingCollision.BomberCollision;
 import uet.oop.bomberman.HandingCollision.EnemyCollision;
 import uet.oop.bomberman.HandingCollision.canMove;
-import uet.oop.bomberman.entities.AnimatedEntitiy;
-import uet.oop.bomberman.entities.Balloon;
-import uet.oop.bomberman.entities.Bomber;
-import uet.oop.bomberman.entities.Oneal;
+import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.sound.SoundEffect;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.handingEvent;
@@ -52,6 +49,12 @@ public class Bomb extends AnimatedEntitiy {
                     if (EnemyCollision.withExplosion(oneal.getX(), oneal.getY(), x, y)) {
                         oneal.dead();
                     }
+                }
+                    else if (handingEvent.entities.get(i) instanceof Doll) {
+                        Doll doll = (Doll) handingEvent.entities.get(i);
+                        if (EnemyCollision.withExplosion(doll.getX(), doll.getY(), x, y)) {
+                            doll.dead();
+                        }
                 }
             }
         } else {
