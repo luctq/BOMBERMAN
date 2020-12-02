@@ -28,9 +28,8 @@ public class Oneal extends AnimatedEntitiy {
         }
     }
     public void caculateDirection() {
-        if (x > handingEvent.bomber.getX()) {
-            if (!BombCollsion.withEntities(x, y, canMove.posXBomb, canMove.posYBomb) && canMove.canMoveLeft(x - speed, y)) x = x - speed;
-        }
+        if (!BombCollsion.withEntities(x, y, canMove.posXBomb, canMove.posYBomb) && x > handingEvent.bomber.getX())
+            if (canMove.canMoveLeft(x - speed, y)) x = x - speed;
         if (!BombCollsion.withEntities(x, y, canMove.posXBomb, canMove.posYBomb) && x < handingEvent.bomber.getX())
             if (canMove.canMoveRight(x + speed, y)) x = x + speed;
         if (!BombCollsion.withEntities(x, y, canMove.posXBomb, canMove.posYBomb) && y > handingEvent.bomber.getY())
@@ -52,7 +51,7 @@ public class Oneal extends AnimatedEntitiy {
         this.img = Sprite.balloom_dead.getFxImage();
         this.img = Sprite.movingSprite(Sprite.mob_dead1, Sprite.mob_dead2, Sprite.mob_dead3, _animate, 20).getFxImage();
     }
-     public void move() {
+    public void move() {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {

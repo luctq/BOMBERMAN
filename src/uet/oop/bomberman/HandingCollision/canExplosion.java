@@ -37,14 +37,13 @@ public class canExplosion {
         if (map[temp2].charAt(temp1) != '#') return true;
         return false;
     }
-
     public static void destroy(int posX, int posY) {
             int temp1 = posX / Sprite.SCALED_SIZE;
             int temp2 = posY / Sprite.SCALED_SIZE;
             switch (map[temp2].charAt(temp1)) {
                 case '*': {
                     Brick brick = (Brick) stillObjects.get(temp1 + 31 * temp2);
-                    map[temp2] = map[temp2].substring(0, temp1) + ' ' + map[temp2].substring(temp1+1);
+                    map[temp2] = map[temp2].substring(0, temp1) + '+' + map[temp2].substring(temp1+1);
                     brick.dead();
                     //stillObjects.set(temp1 + 31 * temp2, new Brick(temp1, temp2, Sprite.grass.getFxImage()));
                    return;

@@ -26,6 +26,6 @@ public class Brick  extends AnimatedEntitiy {
 
     public void dead() {
         alive = false;
-        this.img = Sprite.movingSprite(Sprite.brick_exploded, Sprite.brick_exploded1, Sprite.brick_exploded2, _animate, 20).getFxImage();
+        this.img = Sprite.movingSprite(Sprite.brick_exploded, Sprite.brick_exploded1, Sprite.brick_exploded2, _animate, 60).getFxImage();
     }
 }

@@ -5,14 +5,13 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import uet.oop.bomberman.Game;
 import uet.oop.bomberman.HandingCollision.canExplosion;
 import uet.oop.bomberman.HandingCollision.canMove;
 import uet.oop.bomberman.Map.Level;
-import uet.oop.bomberman.entities.Balloon;
-import uet.oop.bomberman.entities.Oneal;
+import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.bomb.Bomb;
-import uet.oop.bomberman.entities.Bomber;
-import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.sound.SoundEffect;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.FileNotFoundException;
@@ -72,6 +71,7 @@ public class handingEvent extends load {
                                 Bomber.inBomb = true;
                                 canMove.posXBomb = (bomber.getX() + 16) / Sprite.SCALED_SIZE;
                                 canMove.posYBomb = (bomber.getY() + 16) / Sprite.SCALED_SIZE;
+                                SoundEffect.sound(SoundEffect.mediaPlayerPlaceBomb);
                                 Bomb bomb = new Bomb(canMove.posXBomb, canMove.posYBomb, Sprite.bomb.getFxImage());
                                 BombAlive++;
                                 bombs.add(bomb);
@@ -120,38 +120,10 @@ public class handingEvent extends load {
                     }
                 } else {
                     if (event.getCode() == KeyCode.ENTER){
-                        bomber.reset();
-                        stillObjects.clear();
-                        for (int i = 0; i < entities.size(); i++) {
-                            if (entities.get(i) instanceof Balloon) {
-                                Balloon balloon = (Balloon) entities.get(i);
-                                balloon.alive = false;
-                            } else if (entities.get(i) instanceof Oneal) {
-                                Oneal oneal = (Oneal) entities.get(i);
-                                oneal.alive = false;
-                            }
-                        }
-                        entities.clear();
-                        background.clear();
-                        entities.add(bomber);
-                        Level level = new Level(1);
-                        try {
-                            level.creatMap(stillObjects, background, entities);
-                            canMove.map = Level.map;
-                            canExplosion.map = Level.map;
-                            Balloon.map = Level.map;
-                            for (int i = 0; i < entities.size(); i++) {
-                                if (entities.get(i) instanceof Balloon) {
-                                    Balloon balloon = (Balloon) entities.get(i);
-                                    balloon.move();
-                                } else if (entities.get(i) instanceof Oneal) {
-                                    Oneal oneal = (Oneal) entities.get(i);
-                                    oneal.move();
-                                }
-                            }
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
+                        changeLevel();
+                    } else if (event.getCode() == KeyCode.DIGIT1) {
+                        Bomber.level = 1;
+                        changeLevel();
                     }
                     goLeft = false;
                     goRight = false;
@@ -172,5 +144,45 @@ public class handingEvent extends load {
             }
         };
         timer.start();
+    }
+    public static void changeLevel() {
+        Game.TIME = 200;
+        bomber.reset();
+        stillObjects.clear();
+        for (int i = 0; i < entities.size(); i++) {
+            if (entities.get(i) instanceof Balloon) {
+                Balloon balloon = (Balloon) entities.get(i);
+                balloon.alive = false;
+            } else if (entities.get(i) instanceof Oneal) {
+                Oneal oneal = (Oneal) entities.get(i);
+                oneal.alive = false;
+            } else if (entities.get(i) instanceof Doll) {
+                Doll doll = (Doll) entities.get(i);
+                doll.alive = false;
+            }
+        }
+        entities.clear();
+        background.clear();
+        entities.add(bomber);
+        Level level = new Level(Bomber.level);
+        try {
+            Game.start = false;
+            Level.timeToStart = 60;
+            level.creatMap(stillObjects, background, entities);
+            canMove.map = Level.map;
+            canExplosion.map = Level.map;
+            Balloon.map = Level.map;
+            for (int i = 0; i < entities.size(); i++) {
+                if (entities.get(i) instanceof Balloon) {
+                    Balloon balloon = (Balloon) entities.get(i);
+                    balloon.move();
+                } else if (entities.get(i) instanceof Oneal) {
+                    Oneal oneal = (Oneal) entities.get(i);
+                    oneal.move();
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

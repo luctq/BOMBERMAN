@@ -1,5 +1,6 @@
 package uet.oop.bomberman;
 
+import com.sun.javafx.sg.prism.NGAmbientLight;
 import com.sun.prism.paint.Color;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -7,6 +8,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
@@ -14,21 +16,20 @@ import uet.oop.bomberman.Map.Level;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.bomb.DirectionalExplosion;
 import uet.oop.bomberman.entities.bomb.Explosion;
+import uet.oop.bomberman.entities.sound.SoundEffect;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.handingEvent;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BombermanGame extends Application {
-    public static int countUp = 0;
-    public static int countRight = 0;
-    public static boolean goUp, goDown, goLeft, goRight;
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
-    private int timeToStart = 120;
     
+    public static GraphicsContext gc1;
     private GraphicsContext gc;
     private Canvas canvas;
 
@@ -45,8 +46,10 @@ public class BombermanGame extends Application {
     @Override
     public void start(Stage stage) throws FileNotFoundException {
         // Tao Canvas
-        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
+        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT + 50);
         gc = canvas.getGraphicsContext2D();
+        gc1 = canvas.getGraphicsContext2D();
+        Game game = new Game(gc);
         // Tao root container
         Group root = new Group();
         root.getChildren().add(canvas);
@@ -57,7 +60,7 @@ public class BombermanGame extends Application {
         // Them scene vao stage
         stage.setScene(scene);
         stage.show();
-
+        SoundEffect.sound(SoundEffect.mediaPlayerbacksound);
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
@@ -66,10 +69,10 @@ public class BombermanGame extends Application {
             }
         };
         timer.start();
-        Level level = new Level(1);
-        level.creatMap(stillObjects, background, entities);
         Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomberman);
+        Level level = new Level(1);
+        level.creatMap(stillObjects, background, entities);
         handingEvent event = new handingEvent(entities, scene, (Bomber) bomberman, bombs, stillObjects, background);
         event.handing();
         DirectionalExplosion de = new DirectionalExplosion(entities, stillObjects, explosions);
@@ -80,49 +83,101 @@ public class BombermanGame extends Application {
             } else if (entities.get(i) instanceof Oneal) {
                 Oneal oneal = (Oneal) entities.get(i);
                 oneal.move();
+            } else if (entities.get(i) instanceof Doll) {
+                Doll doll = (Doll) entities.get(i);
+                doll.move();
+            } else if (entities.get(i) instanceof Minvo) {
+                Minvo minvo = (Minvo) entities.get(i);
+                minvo.move();
             }
         }
     }
 
     public void update() {
-        for (int i = 0; i < entities.size(); i++) {
-            entities.get(i).update();
+        if(Game.start == true) {
+            if (Game.aSecondInGame > 0) {
+                Game.aSecondInGame--;
+            } else if (Game.TIME > 0){
+                Game.TIME--;
+                Game.aSecondInGame = 60;
+                if (Game.TIME == 0) {
+                    Game.LIVES--;
+                    Game.TIME = 10;
+                }
+                if (Game.LIVES == 0) Game.gameover = true;
+            }
+            if (entities.size() == 1 && Bomber.changeLevel == false) {
+                Bomber.level++;
+                if (Bomber.level > 5) Game.win = true;
+                handingEvent.changeLevel();
+                Bomber.changeLevel = true;
+            }
+            if (entities.size() > 1) {
+                Bomber.changeLevel = false;
+            }
+            if (!handingEvent.bomber.alive && Game.stop == false) {
+                Game.stop = true;
+                Game.LIVES--;
+                if (Game.LIVES == 0) Game.gameover = true;
+            }
+            if (handingEvent.bomber.alive) Game.stop = false;
+            for (int i = 0; i < entities.size(); i++) {
+                entities.get(i).update();
+            }
+            for (int i = 0; i < explosions.size(); i++) {
+                explosions.get(i).update();
+            }
+            for (int i = 0; i < stillObjects.size(); i++) {
+                stillObjects.get(i).update();
+            }
+            for (int i = 0; i < bombs.size(); i++) {
+                bombs.get(i).update();
+            }
+            for (int i = 0; i < background.size(); i++) {
+                background.get(i).update();
+            }
         }
-        for (int i = 0; i < explosions.size(); i++) {
-            explosions.get(i).update();
-        }
-        for (int i = 0; i < stillObjects.size(); i++) {
-            stillObjects.get(i).update();
-        }
-        for (int i = 0; i < bombs.size(); i++) {
-            bombs.get(i).update();
-        }
-        for (int i = 0; i < background.size(); i++) {
-            background.get(i).update();
-        }
+
     }
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        if (timeToStart > 0) {
-            timeToStart--;
-            gc.fillText("LEVEL1", 32 * WIDTH/2 - 150, 32 * HEIGHT/2);
+        if(Game.gameover == true) {
             gc.setFont(new Font(100));
+            gc.fillText("GAME OVER" , 32 * WIDTH/2 - 300, 32 * HEIGHT/2);
+            gc.setFont(new Font(50));
+            gc.fillText("POINTS: " + Game.POINTS, 32 * WIDTH/2 - 150, 32 * HEIGHT/2 + 120);
+        } else if (Game.win == true){
+            gc.setFont(new Font(100));
+            gc.fillText("WINER" , 32 * WIDTH/2 - 150, 32 * HEIGHT/2);
+            gc.setFont(new Font(50));
+            gc.fillText("POINTS: " + Game.POINTS, 32 * WIDTH/2 - 150, 32 * HEIGHT/2 + 120);
         } else {
-            for(Entity e : background) {
-                e.render(gc);
-            }
-            for(Entity e : stillObjects) {
-                e.render(gc);
-            }
-            for(Entity e : entities) {
-                e.render(gc);
-            }
-            for(Explosion e : explosions) {
-                e.render(gc);
-            }
-            for(Bomb b : bombs) {
-                b.render(gc);
+            if (Level.timeToStart > 0) {
+                Level.timeToStart--;
+                gc.fillText("LEVEL" + Bomber.level, 32 * WIDTH/2 - 150, 32 * HEIGHT/2);
+                gc.setFont(new Font(100));
+            } else {
+                Game.start = true;
+                gc.fillText("Time: " + Game.TIME, 32 , 32);
+                gc.fillText("Point: " + Game.POINTS, 32 + 32 * WIDTH/3, 32);
+                gc.fillText("Lives: " + Game.LIVES, 32 + 64 * WIDTH/3, 32);
+                gc.setFont(new Font(30));
+                for(Entity e : background) {
+                    e.render(gc);
+                }
+                for(Entity e : stillObjects) {
+                    e.render(gc);
+                }
+                for(Entity e : entities) {
+                    e.render(gc);
+                }
+                for(Explosion e : explosions) {
+                    e.render(gc);
+                }
+                for(Bomb b : bombs) {
+                    b.render(gc);
+                }
             }
         }
     }

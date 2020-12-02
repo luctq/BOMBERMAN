@@ -25,7 +25,6 @@ public class DirectionalExplosion {
             for (int i = 1; i <= radius; i++) {
                 canExplosion.destroy(posX - 32 * i, posY);
             }
-
         }
         if (canExplosion.explosionRight(posX + 32, posY)){
             Right(posX + 32, posY);

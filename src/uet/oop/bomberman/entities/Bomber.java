@@ -2,9 +2,12 @@ package uet.oop.bomberman.entities;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.HandingCollision.canMove;
+import uet.oop.bomberman.entities.sound.SoundEffect;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Bomber extends AnimatedEntitiy {
+        public static boolean changeLevel = false;
+        public static int level = 1;
         public static boolean inBomb = true;
         public boolean alive = true;
         public static int speed = 2;
@@ -46,6 +49,7 @@ public class Bomber extends AnimatedEntitiy {
         }
 
         public void dead() {
+            SoundEffect.sound(SoundEffect.mediaPlayerDie);
             alive = false;
             this.img = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2, Sprite.player_dead3, _animate, 20).getFxImage();
         }

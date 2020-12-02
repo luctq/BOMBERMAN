@@ -16,7 +16,7 @@ public abstract class Entity {
     protected int y;
 
     protected Image img;
-
+    protected Sprite _sprite;
     //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
     public Entity( int xUnit, int yUnit, Image img) {
         this.x = xUnit * Sprite.SCALED_SIZE;
@@ -25,7 +25,7 @@ public abstract class Entity {
     }
 
     public void render(GraphicsContext gc) {
-        gc.drawImage(img, x, y);
+        gc.drawImage(img, x, y + 50);
     }
     public abstract void update();
     public int getX() {
@@ -43,5 +43,12 @@ public abstract class Entity {
     }
     public void setImg(Image img) {
         this.img = img;
+    }
+    public int getXTile(){
+        return (int) (x + _sprite.SIZE/2) / Sprite.DEFAULT_SIZE;
+    }
+
+    public int getYTile(){
+        return (int) (y + _sprite.SIZE/2) / Sprite.DEFAULT_SIZE;
     }
 }

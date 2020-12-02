@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Level extends loadMap{
+    public static int timeToStart = 60;
     public int  number = 1;
     private static int width;
     private static int height;
@@ -75,13 +76,15 @@ public class Level extends loadMap{
                     } case '4' : {
                         Entity object = new Grass(i, j, Sprite.grass.getFxImage());
                         stillObjects.add(object);
-                        Entity minvo = new Minvo(i, j, Sprite.doll_right1.getFxImage());
+                        Entity minvo = new Minvo(i, j, Sprite.minvo_right1.getFxImage());
                         entities.add(minvo);
+                        break;
                     } case '5' : {
                         Entity object = new Grass(i, j, Sprite.grass.getFxImage());
                         stillObjects.add(object);
-                        Entity Kondoria = new Kondoria(i, j, Sprite.doll_right1.getFxImage());
+                        Entity Kondoria = new Kondoria(i, j, Sprite.minvo_right1.getFxImage());
                         entities.add(Kondoria);
+                        break;
                     }
                     default: {
                         Entity object = new Grass(i, j, Sprite.grass.getFxImage());
