@@ -1,4 +1,4 @@
-package uet.oop.bomberman.entities;
+package uet.oop.bomberman.entities.enemy;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.ai.AILow;
@@ -12,6 +12,7 @@ public class Doll extends Enemy {
         ai = new AILow(handingEvent.bomber, this);
         _direction = ai.calculateDirection();
         speed = 2;
+        point = 400;
     }
     protected void chooseSprite(int i){
         switch(i) {

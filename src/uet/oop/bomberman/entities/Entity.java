@@ -45,10 +45,10 @@ public abstract class Entity {
         this.img = img;
     }
     public int getXTile(){
-        return (int) (x + _sprite.SIZE/2) / Sprite.DEFAULT_SIZE;
+        return (int) (x + 16/2) / Sprite.DEFAULT_SIZE;
     }
 
     public int getYTile(){
-        return (int) (y + _sprite.SIZE/2) / Sprite.DEFAULT_SIZE;
+        return (int) (y + 16/2) / Sprite.DEFAULT_SIZE;
     }
 }

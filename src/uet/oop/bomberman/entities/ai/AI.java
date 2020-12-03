@@ -1,8 +1,7 @@
 package uet.oop.bomberman.entities.ai;
 
-import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Bomber;
-import uet.oop.bomberman.entities.Enemy;
+import uet.oop.bomberman.entities.enemy.Enemy;
 
 import java.util.Random;
 

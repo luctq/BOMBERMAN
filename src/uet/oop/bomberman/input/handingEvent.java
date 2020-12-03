@@ -11,6 +11,8 @@ import uet.oop.bomberman.HandingCollision.canMove;
 import uet.oop.bomberman.Map.Level;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.bomb.Bomb;
+import uet.oop.bomberman.entities.bomb.DirectionalExplosion;
+import uet.oop.bomberman.entities.enemy.*;
 import uet.oop.bomberman.entities.sound.SoundEffect;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -119,10 +121,28 @@ public class handingEvent extends load {
                         }
                     }
                 } else {
+                    DirectionalExplosion.radius = 1;
+                    Bomber.speed = 2;
+                    Bomb.numberOfBomb = 1;
                     if (event.getCode() == KeyCode.ENTER){
                         changeLevel();
                     } else if (event.getCode() == KeyCode.DIGIT1) {
                         Bomber.level = 1;
+                        changeLevel();
+                    } else if (event.getCode() == KeyCode.DIGIT2) {
+                        Bomber.level = 2;
+                        changeLevel();
+                    } else if (event.getCode() == KeyCode.DIGIT3) {
+                        Bomber.level = 3;
+                        changeLevel();
+                    } else if (event.getCode() == KeyCode.DIGIT4) {
+                        Bomber.level = 4;
+                        changeLevel();
+                    } else if (event.getCode() == KeyCode.DIGIT5) {
+                        Bomber.level = 5;
+                        changeLevel();
+                    } else if (event.getCode() == KeyCode.DIGIT6) {
+                        Bomber.level = 6;
                         changeLevel();
                     }
                     goLeft = false;
@@ -146,6 +166,9 @@ public class handingEvent extends load {
         timer.start();
     }
     public static void changeLevel() {
+        SoundEffect.stop(SoundEffect.mediaPlayerbacksound);
+        SoundEffect.sound(SoundEffect.mediaPlayerbacksound);
+        Game.winLevel = false;
         Game.TIME = 200;
         bomber.reset();
         stillObjects.clear();
@@ -159,6 +182,15 @@ public class handingEvent extends load {
             } else if (entities.get(i) instanceof Doll) {
                 Doll doll = (Doll) entities.get(i);
                 doll.alive = false;
+            } else if (entities.get(i) instanceof Minvo) {
+                Minvo minvo = (Minvo) entities.get(i);
+                minvo.alive = false;
+            } else if (entities.get(i) instanceof Kondoria) {
+                Kondoria kondoria = (Kondoria) entities.get(i);
+                kondoria.alive = false;
+            }  else if (entities.get(i) instanceof Ghost) {
+                Ghost ghost = (Ghost) entities.get(i);
+                ghost.alive = false;
             }
         }
         entities.clear();
@@ -171,7 +203,7 @@ public class handingEvent extends load {
             level.creatMap(stillObjects, background, entities);
             canMove.map = Level.map;
             canExplosion.map = Level.map;
-            Balloon.map = Level.map;
+            Enemy.map = Level.map;
             for (int i = 0; i < entities.size(); i++) {
                 if (entities.get(i) instanceof Balloon) {
                     Balloon balloon = (Balloon) entities.get(i);
@@ -179,6 +211,18 @@ public class handingEvent extends load {
                 } else if (entities.get(i) instanceof Oneal) {
                     Oneal oneal = (Oneal) entities.get(i);
                     oneal.move();
+                } else if (entities.get(i) instanceof Doll) {
+                    Doll doll = (Doll) entities.get(i);
+                    doll.move();
+                } else if (entities.get(i) instanceof Minvo) {
+                    Minvo minvo = (Minvo) entities.get(i);
+                    minvo.move();
+                } else if (entities.get(i) instanceof Kondoria) {
+                    Kondoria kondoria = (Kondoria) entities.get(i);
+                    kondoria.move();
+                } else if (entities.get(i) instanceof Ghost) {
+                    Ghost ghost = (Ghost) entities.get(i);
+                    ghost.move();
                 }
             }
         } catch (FileNotFoundException e) {

@@ -1,8 +1,7 @@
-package uet.oop.bomberman.entities;
+package uet.oop.bomberman.entities.enemy;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.image.Image;
-import javafx.scene.media.MediaPlayer;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.HandingCollision.BombCollsion;
@@ -10,12 +9,12 @@ import uet.oop.bomberman.HandingCollision.canMove;
 import uet.oop.bomberman.Map.Level;
 import uet.oop.bomberman.entities.AnimatedEntitiy;
 import uet.oop.bomberman.entities.ai.AI;
-import uet.oop.bomberman.entities.Balloon;
 import uet.oop.bomberman.entities.sound.SoundEffect;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.handingEvent;
 
 public abstract class Enemy extends AnimatedEntitiy {
+    public int point;
     public boolean alive = true;
     public int timeDead = 30;
     public static String[] map = Level.map;
@@ -36,11 +35,12 @@ public abstract class Enemy extends AnimatedEntitiy {
     public void update() {
         animate();
         if (alive == false) {
+            BombermanGame.gc1.fillText("+" + point, x, y + 64);
             SoundEffect.sound(SoundEffect.mediaPlayerCollisionEnemy);
             if (timeDead > 0) timeDead--;
             if (timeDead == 0) {
                 handingEvent.entities.remove(this);
-                Game.POINTS += 100;
+                Game.POINTS += point;
                 timeDead = 30;
             }
         }

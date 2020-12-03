@@ -1,6 +1,7 @@
 package uet.oop.bomberman.Map;
 
 import uet.oop.bomberman.entities.*;
+import uet.oop.bomberman.entities.enemy.*;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.File;
@@ -46,7 +47,7 @@ public class Level extends loadMap{
                         stillObjects.add(object);
                         break;
                     }
-                    case '*': case 'f': case 's': case 'b': case 'x': {
+                    case '*': case 'f': case 's': case 'b': case 'x': case 'a': {
                         Entity object1 = new Grass(i, j, Sprite.grass.getFxImage());
                         background.add(object1);
                         Entity object = new Brick(i, j, Sprite.brick.getFxImage());
@@ -82,8 +83,14 @@ public class Level extends loadMap{
                     } case '5' : {
                         Entity object = new Grass(i, j, Sprite.grass.getFxImage());
                         stillObjects.add(object);
-                        Entity Kondoria = new Kondoria(i, j, Sprite.minvo_right1.getFxImage());
-                        entities.add(Kondoria);
+                        Entity kondoria = new Kondoria(i, j, Sprite.kondoria_right1.getFxImage());
+                        entities.add(kondoria);
+                        break;
+                    } case '6': {
+                        Entity object = new Grass(i, j, Sprite.grass.getFxImage());
+                        stillObjects.add(object);
+                        Entity ghost  = new Ghost(i, j, Sprite.ghost_right1.getFxImage());
+                        entities.add(ghost);
                         break;
                     }
                     default: {

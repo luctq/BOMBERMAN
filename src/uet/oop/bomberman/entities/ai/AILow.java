@@ -1,7 +1,7 @@
 package uet.oop.bomberman.entities.ai;
 
 import uet.oop.bomberman.entities.Bomber;
-import uet.oop.bomberman.entities.Enemy;
+import uet.oop.bomberman.entities.enemy.Enemy;
 
 public class AILow extends AI {
     public AILow(Bomber bomber, Enemy enemy){

@@ -4,6 +4,7 @@ import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.Map.Level;
 import uet.oop.bomberman.entities.bomb.DirectionalExplosion;
 import uet.oop.bomberman.entities.item.BombItem;
+import uet.oop.bomberman.entities.item.DetornatorItem;
 import uet.oop.bomberman.entities.item.FlameItem;
 import uet.oop.bomberman.entities.item.SpeedItem;
 import uet.oop.bomberman.graphics.Sprite;
@@ -43,7 +44,7 @@ public class canExplosion {
             switch (map[temp2].charAt(temp1)) {
                 case '*': {
                     Brick brick = (Brick) stillObjects.get(temp1 + 31 * temp2);
-                    map[temp2] = map[temp2].substring(0, temp1) + '+' + map[temp2].substring(temp1+1);
+                    map[temp2] = map[temp2].substring(0, temp1) + ' ' + map[temp2].substring(temp1+1);
                     brick.dead();
                     //stillObjects.set(temp1 + 31 * temp2, new Brick(temp1, temp2, Sprite.grass.getFxImage()));
                    return;
@@ -70,6 +71,12 @@ public class canExplosion {
                     map[temp2] = map[temp2].substring(0, temp1) + 'x' + map[temp2].substring(temp1 + 1);
                     Entity portal = new Portal(temp1, temp2, Sprite.portal.getFxImage());
                     stillObjects.set(temp1 + 31 * temp2, portal);
+                    return;
+                }
+                case 'a': {
+                    map[temp2] = map[temp2].substring(0, temp1) + 'A' + map[temp2].substring(temp1 + 1);
+                    Entity detornatorItem = new DetornatorItem(temp1, temp2, Sprite.powerup_detonator.getFxImage());
+                    stillObjects.set(temp1 + 31 * temp2, detornatorItem);
                     return;
                 }
         }

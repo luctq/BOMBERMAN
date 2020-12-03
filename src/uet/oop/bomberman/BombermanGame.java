@@ -1,14 +1,11 @@
 package uet.oop.bomberman;
 
-import com.sun.javafx.sg.prism.NGAmbientLight;
-import com.sun.prism.paint.Color;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
@@ -16,12 +13,12 @@ import uet.oop.bomberman.Map.Level;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.bomb.DirectionalExplosion;
 import uet.oop.bomberman.entities.bomb.Explosion;
+import uet.oop.bomberman.entities.enemy.*;
 import uet.oop.bomberman.entities.sound.SoundEffect;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.handingEvent;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,8 +26,8 @@ public class BombermanGame extends Application {
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
     
+    public static GraphicsContext gc;
     public static GraphicsContext gc1;
-    private GraphicsContext gc;
     private Canvas canvas;
 
     private List<Bomb> bombs = new ArrayList<>();
@@ -71,10 +68,10 @@ public class BombermanGame extends Application {
         timer.start();
         Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomberman);
-        Level level = new Level(1);
-        level.creatMap(stillObjects, background, entities);
         handingEvent event = new handingEvent(entities, scene, (Bomber) bomberman, bombs, stillObjects, background);
         event.handing();
+        Level level = new Level(Bomber.level);
+        level.creatMap(stillObjects, background, entities);
         DirectionalExplosion de = new DirectionalExplosion(entities, stillObjects, explosions);
         for (int i = 0; i < entities.size(); i++) {
             if (entities.get(i) instanceof Balloon) {
@@ -83,12 +80,19 @@ public class BombermanGame extends Application {
             } else if (entities.get(i) instanceof Oneal) {
                 Oneal oneal = (Oneal) entities.get(i);
                 oneal.move();
-            } else if (entities.get(i) instanceof Doll) {
+            }
+            else if (entities.get(i) instanceof Doll) {
                 Doll doll = (Doll) entities.get(i);
                 doll.move();
             } else if (entities.get(i) instanceof Minvo) {
                 Minvo minvo = (Minvo) entities.get(i);
                 minvo.move();
+            } else if (entities.get(i) instanceof Kondoria) {
+                Kondoria kondoria = (Kondoria) entities.get(i);
+                kondoria.move();
+            } else if (entities.get(i) instanceof Ghost) {
+                Ghost ghost = (Ghost) entities.get(i);
+                ghost.move();
             }
         }
     }
@@ -106,9 +110,13 @@ public class BombermanGame extends Application {
                 }
                 if (Game.LIVES == 0) Game.gameover = true;
             }
-            if (entities.size() == 1 && Bomber.changeLevel == false) {
+            if (entities.size() == 1 && Bomber.changeLevel == false && Game.winLevel == true) {
                 Bomber.level++;
-                if (Bomber.level > 5) Game.win = true;
+                if (Bomber.level > 6)
+                {
+                    SoundEffect.sound(SoundEffect.mediaPlayerBombExploded);
+                    Game.win = true;
+                }
                 handingEvent.changeLevel();
                 Bomber.changeLevel = true;
             }
@@ -143,19 +151,21 @@ public class BombermanGame extends Application {
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         if(Game.gameover == true) {
+            SoundEffect.stop(SoundEffect.mediaPlayerbacksound);
             gc.setFont(new Font(100));
             gc.fillText("GAME OVER" , 32 * WIDTH/2 - 300, 32 * HEIGHT/2);
             gc.setFont(new Font(50));
             gc.fillText("POINTS: " + Game.POINTS, 32 * WIDTH/2 - 150, 32 * HEIGHT/2 + 120);
         } else if (Game.win == true){
+            SoundEffect.stop(SoundEffect.mediaPlayerbacksound);
             gc.setFont(new Font(100));
-            gc.fillText("WINER" , 32 * WIDTH/2 - 150, 32 * HEIGHT/2);
+            gc.fillText("VICTORY" , 32 * WIDTH/2 - 200, 32 * HEIGHT/2);
             gc.setFont(new Font(50));
-            gc.fillText("POINTS: " + Game.POINTS, 32 * WIDTH/2 - 150, 32 * HEIGHT/2 + 120);
+            gc.fillText("POINTS: " + Game.POINTS, 32 * WIDTH/2 - 100, 32 * HEIGHT/2 + 120);
         } else {
             if (Level.timeToStart > 0) {
                 Level.timeToStart--;
-                gc.fillText("LEVEL" + Bomber.level, 32 * WIDTH/2 - 150, 32 * HEIGHT/2);
+                gc.fillText("LEVEL" + Bomber.level, 32 * WIDTH/2 - 150, 32 * HEIGHT/2 + 30);
                 gc.setFont(new Font(100));
             } else {
                 Game.start = true;

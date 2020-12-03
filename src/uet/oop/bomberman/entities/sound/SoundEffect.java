@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
-public class SoundEffect extends Application{
+public class SoundEffect{
     //backsoundsrc\Sound\backSound.mp3
     public static Media mediaBackSound = new Media(new File("res\\sound\\backSound.mp3")
             .toURI().toString());
@@ -37,17 +37,18 @@ public class SoundEffect extends Application{
             .toURI().toString());
     public static MediaPlayer mediaPlayerDie = new MediaPlayer(mediaBomberDie);
 
-
+    public static Media mediaPlayerWin = new Media(new File("res\\sound\\backSound.mp3")
+            .toURI().toString());
+    public static MediaPlayer mediaWin = new MediaPlayer(mediaPlayerWin);
 
     public static void sound(MediaPlayer mp) {
         mp.play();
         mp.seek(mp.getStartTime());
-
         //mp.stop();
     }
 
-    @Override
-    public void start(Stage arg0) throws Exception {
-        //sound();
+    public static void stop(MediaPlayer mp) {
+        mp.stop();
+        //mp.stop();
     }
 }
